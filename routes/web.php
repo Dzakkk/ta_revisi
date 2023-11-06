@@ -34,6 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::get('petugas/dashboard', [AdminController::class, 'dashboard'])->name('petugas.dashboard')->middleware('userAkses:petugas');
     Route::get('pegawai/dashboard', [PegawaiController::class, 'dashboard'])->name('pegawai.dashboard')->middleware('userAkses:pegawai');
 
+    //Component petugas
+    Route::get('petugas/dashboard/pelatihan', [AdminController::class, 'pelatihan'])->name('petugas.storeForm')->middleware('userAkses:petugas');
+    Route::get('petugas/dashboard/keluarga', [AdminController::class, 'keluarga'])->name('petugas.storeForm')->middleware('userAkses:petugas');
+
+    //Cuti petugas
+    Route::get('petugas/dashboard/cuti', [AdminController::class, 'cuti'])->name('petugas.cuti')->middleware('userAkses:petugas');
+
     //Crud User petugas
     Route::get('petugas/dashboard/pegawai', [AdminController::class, 'pegawai'])->name('petugas.pegawai')->middleware('userAkses:petugas');
     Route::get('petugas/storeUser', [AdminController::class, 'storeUserForm'])->name('petugas.storeForm')->middleware('userAkses:petugas');
@@ -108,4 +115,13 @@ Route::middleware('auth')->group(function () {
     Route::get('pegawai/updatePelatihan/{id}', [PegawaiController::class, 'updatePelatihanForm'])->name('Pelatihan.updateForm')->middleware('userAkses:pegawai');
     Route::put('pegawai/updatePelatihan/{id}', [PegawaiController::class, 'updatePelatihan'])->name('Pelatihan.update')->middleware('userAkses:pegawai');
     Route::delete('pegawai/pelatihan/{id}', [PegawaiController::class, 'deletePelatihan'])->name('Pelatihan.delete')->middleware('userAkses:pegawai');
+
+    //Cuti Pegawai
+    Route::get('pegawai/dashboard/cuti', [PegawaiController::class, 'cuti'])->name('pegawai.cuti')->middleware('userAkses:pegawai');
+    Route::get('pegawai/cuti', [PegawaiController::class, 'dataCuti'])->name('pegawai.dataCuti')->middleware('userAkses:pegawai');
+    Route::get('pegawai/storeCuti', [PegawaiController::class, 'storeCutiForm'])->name('Cuti.storeForm')->middleware('userAkses:pegawai');
+    Route::post('pegawai/storeCuti', [PegawaiController::class, 'storeCuti'])->name('Cuti.store')->middleware('userAkses:pegawai');
+    Route::get('pegawai/updateCuti/{id}', [PegawaiController::class, 'updateCutiForm'])->name('Cuti.updateForm')->middleware('userAkses:pegawai');
+    Route::put('pegawai/updateCuti/{id}', [PegawaiController::class, 'updateCuti'])->name('Cuti.update')->middleware('userAkses:pegawai');
+    Route::delete('pegawai/cuti/{id}', [PegawaiController::class, 'deleteCuti'])->name('Cuti.delete')->middleware('userAkses:pegawai');
 });

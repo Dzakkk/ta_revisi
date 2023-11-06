@@ -2,87 +2,295 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Dashboard - Administrasi Kepegawaian SMKN 1 Cimahi</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{{ asset('tamplate/assets/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('tamplate/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('tamplate/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('tamplate/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('tamplate/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('tamplate/assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+    <link href="{{ asset('tamplate/assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+    <link href="{{ asset('tamplate/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ asset('tamplate/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{ asset('tamplate/assets/css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Administrasi</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/admin/dashboard">Home</a>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block">NiceAdmin</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
+
+        <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div><!-- End Search Bar -->
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
+                        data-bs-toggle="dropdown">
+                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->nama }}</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>{{ Auth::user()->nama }}</h6>
+                            <span>Web Designer</span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-gear"></i>
+                                <span>Account Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                                <i class="bi bi-question-circle"></i>
+                                <span>Need Help?</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/logout">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link" href="/petugas/dashboard">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Pangkat-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Cuti</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="Pangkat-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="/pegawai/cuti">
+                            <i class="bi bi-circle"></i><span>Riwayat cutimu</span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/pegawai/dashboard/pangkat">pangkat</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/pegawai/dashboard/biodata">biodata</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/pegawai/dashboard/pendidikan">pendidikan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/pegawai/dashboard/keluarga">Keluarga</a>
-                    </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/pegawai/dashboard/pelatihan">Pelatihan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/pegawai/Keluarga">Gaji</a>
+                    <li>
+                        <a href="/petugas/dashboard/cuti">
+                            <i class="bi bi-circle"></i><span>Ajukan Cuti</span>
+                        </a>
                     </li>
                 </ul>
-                <div class="dropdown">
-                    <a class="btn btn-outline dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="..." alt="img" class="rounded" style="max-widht: 50px">
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#pegawai-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-person"></i>
+                        <span>Pelatihan</span><i
+                            class="bi bi-chevron-down ms-auto"></i>
                     </a>
-
-                    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="/profile">profile</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="/logout">logout</a></li>
+                    <ul id="pegawai-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="/pegawai/pelatihan">
+                                <i class="bi bi-circle"></i><span>data pelatihan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/pegawai/dashboard/pelatihan">
+                                <i class="bi bi-circle"></i><span>tambah pelatihan</span>
+                            </a>
+                        </li>
                     </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-    @yield('data_pegawai')
+
+            <li class="nav-heading">Pages</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/pegawai/dashboard/keluarga">
+                    <i class="bi bi-question-circle"></i>
+                    <span>Keluarga</span>
+                </a>
+            </li><!-- End F.A.Q Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/pegawai/dashboard/pelatihan">
+                    <i class="bi bi-envelope"></i>
+                    <span>Pelatihan</span>
+                </a>
+            </li><!-- End Contact Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/pegawai/dashboard/pangkat">
+                    <i class="bi bi-card-list"></i>
+                    <span>Pangkat</span>
+                </a>
+            </li><!-- End Register Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/pegawai/dashboard/biodata">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span>biodata</span>
+                </a>
+            </li><!-- End Login Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/pegawai/dashboard/pendidikan">
+                    <i class="bi bi-dash-circle"></i>
+                    <span>pendidikan</span>
+                </a>
+            </li><!-- End Error 404 Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="pages-blank.html">
+                    <i class="bi bi-file-earmark"></i>
+                    <span>Blank</span>
+                </a>
+            </li><!-- End Blank Page Nav -->
+
+        </ul>
+
+    </aside><!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section dashboard">
+            @yield('data_pegawai')
     
-    @yield('storePangkatForm')
-    @yield('data_pangkat')
-    @yield('updatePangkatForm')
+            @yield('storePangkatForm')
+            @yield('data_pangkat')
+            @yield('updatePangkatForm')
+        
+            @yield('storeBiodataForm')
+            @yield('data_biodata')
+            @yield('updateBiodataForm')
+        
+            @yield('storePendidikanForm')
+            @yield('data_pendidikan')
+            @yield('updatePendidikanForm')
+        
+            @yield('storeKeluargaForm')
+            @yield('data_keluarga')
+            @yield('updateKeluargaForm')
+        
+            @yield('data_pelatihan')
+            @yield('storePelatihanForm')
+            @yield('updatePelatihanForm')
 
-    @yield('storeBiodataForm')
-    @yield('data_biodata')
-    @yield('updateBiodataForm')
+            @yield('data_cuti')
+            @yield('storeCutiForm')
+            @yield('updateCutiForm')
+        </section>
 
-    @yield('storePendidikanForm')
-    @yield('data_pendidikan')
-    @yield('updatePendidikanForm')
+    </main><!-- End #main -->
 
-    @yield('storeKeluargaForm')
-    @yield('data_keluarga')
-    @yield('updateKeluargaForm')
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+    </footer><!-- End Footer -->
 
-    @yield('data_pelatihan')
-    @yield('storePelatihanForm')
-    @yield('updatePelatihanForm')
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('tamplate/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('tamplate/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('tamplate/assets/vendor/chart.js/chart.umd.js') }}"></script>
+    <script src="{{ asset('tamplate/assets/vendor/echarts/echarts.min.js') }}"></script>
+    <script src="{{ asset('tamplate/assets/vendor/quill/quill.min.js') }}"></script>
+    <script src="{{ asset('tamplate/assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+    <script src="{{ asset('tamplate/assets/vendor/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('tamplate/assets/vendor/php-email-form/validate.js') }}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{ asset('tamplate/assets/js/main.js') }}"></script>
+
 </body>
 
 </html>

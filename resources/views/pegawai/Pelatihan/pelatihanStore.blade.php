@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-4">
                 <label class="form-label" for="waktu_pelatihan">waktu pelatihan</label>
-                <input type="text" name="waktu_pelatihan" class="form-control" id="waktu_pelatihan" placeholder="324...">
+                <input type="date" name="waktu_pelatihan" class="form-control" id="waktu_pelatihan" placeholder="324...">
             </div>
             <div class="col-md-4">
                 <label class="form-label" for="dokumen">dokumen</label>

@@ -16,5 +16,8 @@ class Cuti extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
-    
+    public function pegawai()
+    {
+        return $this->belongsTo(Pegawai::class, 'nip', 'nip');
+    }
 }

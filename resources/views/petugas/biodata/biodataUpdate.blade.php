@@ -53,7 +53,7 @@
                 <input type="text" name="karpeg" id="karpeg" class="form-control" value="{{ $user->karpeg }}">
             </div>
             <div class="col-12 pb-4">
-                <button type="submit" class="btn btn-primary">Tambah Data</button>
+                <button type="submit" class="btn btn-primary">Update Data</button>
             </div>
         </form>
     </div>

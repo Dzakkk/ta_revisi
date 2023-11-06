@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('cuti', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->integer('nip');
+            $table->string('nip');
+            $table->foreign('nip')->references('nip')->on('pegawai');
             $table->date('TMT_cuti');
             $table->date('selesai');
             $table->string('keterangan');

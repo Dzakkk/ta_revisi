@@ -12,6 +12,7 @@ $row = 1;
             <th scope="col">NIP</th>
             <th scope="col">NAMA PASANGAN</th>
             <th scope="col">JUMLAH ANAK</th>
+            <th scope="col">dokumen</th>
             <th scope="col">#</th>
 
         </tr>
@@ -23,8 +24,12 @@ $row = 1;
                 <td>{{ $user->nip }}</td>
                 <td>{{ $user->nama_pasangan }}</td>
                 <td>{{ $user->jumlah_anak }}</td>
-                <td><img src="{{ asset('storage/' . $user->dokumen) }}" alt="photo"></td>
-                <td>
+                <td>@if (isset($user->dokumen))
+                    <div class="">
+                        <img src="{{ asset('storage/dokumens/' . $user->dokumen) }}" alt="dokumen"/>
+                    </div>
+                    @endif</td>                
+                    <td>
                     <div class="">
                         <a href="/petugas/updateBiodata/{{ $user->id }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
                         {{-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"

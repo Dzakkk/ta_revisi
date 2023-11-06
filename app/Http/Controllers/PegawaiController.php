@@ -58,13 +58,11 @@ class PegawaiController extends Controller
             'tanggal_lahir' => 'required',
             'telepon' => 'required',
             'alamat' => 'required',
-            'photo_pas' => 'required|image|max:2048', // Assuming a maximum file size of 2MB.
+            'karpeg' => 'required',
+            'photo_pas' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
 
-        $file = $request->file('photo_pas');
-        $coverPath = $file->store('public'); // Store the image in the 'public' disk.
-
-        Biodata::create([
+        $data = [
             'nik' => $request->nik,
             'nip' => $request->nip,
             'nama' => $request->nama,
@@ -75,8 +73,20 @@ class PegawaiController extends Controller
             'tanggal_lahir' => $request->tanggal_lahir,
             'telepon' => $request->telepon,
             'alamat' => $request->alamat,
-            'photo_pas' => $coverPath, // Store the complete path.
-        ]);
+            'karpeg' => $request->karpeg,
+
+           
+        ];
+
+        if ($request->hasFile('photo_pas')) {
+            $photo_pas = $request->file('photo_pas');
+            $photo_pasPath = $photo_pas->storeAs('public/photo_pas', $photo_pas->getClientOriginalName());
+            $data['photo_pas'] = $photo_pas->getClientOriginalName();
+        } else {
+            $photo_pasPath = null;
+        }
+
+        Biodata::create($data);
 
         return redirect('/pegawai/dashboard/biodata')->with('success', 'Pegawai created successfully.');
     }
@@ -91,7 +101,27 @@ class PegawaiController extends Controller
     public function updateBiodata(Request $request, $id)
     {
         $data = Biodata::find($id);
-        $data->update($request->all());
+        $data->nip = $request->nip;
+        $data->nama = $request->nama;
+        $data->agama = $request->agama;
+        $data->jenis_kelamin = $request->jenis_kelamin;
+        $data->status_perkawinan = $request->status_perkawinan;
+        $data->tempat_lahir = $request->tempat_lahir;
+        $data->tanggal_lahir = $request->tanggal_lahir;
+        $data->telepon = $request->telepon;
+        $data->karpeg = $request->karpeg;
+        $data->alamat = $request->alamat;
+
+        // Cek apakah ada file gambar yang diunggah untuk sampul data
+        if ($request->hasFile('photo_pas')) {
+            // Proses unggah file gambar dan simpan dengan nama yang unik
+            $photo_pasPath = $request->file('photo_pas')->storeAs('public/photo_pas', $request->file('photo_pas')->getClientOriginalName());
+
+            // Perbarui nama file sampul data dalam basis data
+            $data->photo_pas = $request->file('photo_pas')->getClientOriginalName();
+        }
+
+        $data->save();
         return redirect('/pegawai/dashboard/biodata')->with('DATA WAS UPDATED');
     }
 
@@ -136,18 +166,26 @@ class PegawaiController extends Controller
             'nip' => 'required',
             'nama_pasangan' => 'required',
             'jumlah_anak' => 'required',
-            'dokumen' => 'required',
+            'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
 
-        $file = $request->file('dokumen');
-        $coverPath = $file->store('public'); // Store the image in the 'public' disk.
 
-        Keluarga::create([
+        $data = [
             'nip' => $request->nip,
             'nama_pasangan' => $request->nama_pasangan,
             'jumlah_anak' => $request->jumlah_anak,
-            'dokumen' => $coverPath,
-        ]);
+        ];
+
+        if ($request->hasFile('dokumen')) {
+            $dokumen = $request->file('dokumen');
+            $dokumenPath = $dokumen->storeAs('public/dokumens', $dokumen->getClientOriginalName());
+            $data['dokumen'] = $dokumen->getClientOriginalName();
+        } else {
+            $dokumenPath = null;
+        }
+
+        Keluarga::create($data);
+
 
         return redirect('/pegawai/dashboard/keluarga')->with('success', 'Pegawai created successfully.');
     }
@@ -162,7 +200,21 @@ class PegawaiController extends Controller
     public function updateKeluarga(Request $request, $id)
     {
         $data = Keluarga::find($id);
-        $data->update($request->all());
+
+        $data->nip = $request->nip;
+        $data->nama_pasangan = $request->nama_pasangan;
+        $data->jumlah_anak = $request->jumlah_anak;
+
+        // Cek apakah ada file gambar yang diunggah untuk sampul data
+        if ($request->hasFile('dokumen')) {
+            // Proses unggah file gambar dan simpan dengan nama yang unik
+            $dokumenPath = $request->file('dokumen')->storeAs('public/dokumens', $request->file('dokumen')->getClientOriginalName());
+
+            // Perbarui nama file sampul data dalam basis data
+            $data->dokumen = $request->file('dokumen')->getClientOriginalName();
+        }
+
+        $data->save();
         return redirect('/pegawai/dashboard/keluarga')->with('DATA WAS UPDATED');
     }
 
@@ -322,9 +374,9 @@ class PegawaiController extends Controller
     //pelatihan
     public function dataPelatihan()
     {
-        $user = Auth::user(); // Mendapatkan objek pengguna yang sudah terautentikasi
-        $pelatihan = $user->pelatihan; // Mendapatkan data pelatihan penggun
-        return view('pegawai.pelatihan.pelatihan', ['user' => $pelatihan]);
+        $pelatihan = Auth::user(); // Mendapatkan objek pengguna yang sudah terautentikasi
+        $user = $pelatihan->pelatihan; // Mendapatkan data pelatihan penggun
+        return view('pegawai.pelatihan.pelatihan', ['user' => $user]);
     }
 
     public function pelatihan()
@@ -339,17 +391,24 @@ class PegawaiController extends Controller
             'nip' => 'required',
             'pelatihan' => 'required',
             'waktu_pelatihan' => 'required',
-            'dokumen' => 'required',
-          
+            'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
 
-        Pelatihan::create([
+        $data = [
             'nip' => $request->nip,
             'pelatihan' => $request->pelatihan,
             'waktu_pelatihan' => $request->waktu_pelatihan,
-            'dokumen' => $request->dokumen,
-         
-        ]);
+        ];
+
+        if ($request->hasFile('dokumen')) {
+            $dokumen = $request->file('dokumen');
+            $dokumenPath = $dokumen->storeAs('public/dokumens', $dokumen->getClientOriginalName());
+            $data['dokumen'] = $dokumen->getClientOriginalName();
+        } else {
+            $dokumenPath = null;
+        }
+
+        Pelatihan::create($data);
 
         return redirect('/pegawai/dashboard/pelatihan')->with('success', 'Pegawai created successfully.');
     }
@@ -364,7 +423,20 @@ class PegawaiController extends Controller
     public function updatePelatihan(Request $request, $id)
     {
         $data = Pelatihan::find($id);
-        $data->update($request->all());
+        $data->nip = $request->nip;
+        $data->pelatihan = $request->pelatihan;
+        $data->waktu_pelatihan = $request->waktu_pelatihan;
+
+        // Cek apakah ada file gambar yang diunggah untuk sampul data
+        if ($request->hasFile('dokumen')) {
+            // Proses unggah file gambar dan simpan dengan nama yang unik
+            $dokumenPath = $request->file('dokumen')->storeAs('public/dokumens', $request->file('dokumen')->getClientOriginalName());
+
+            // Perbarui nama file sampul data dalam basis data
+            $data->dokumen = $request->file('dokumen')->getClientOriginalName();
+        }
+
+        $data->save();
         return redirect('/pegawai/dashboard/pelatihan')->with('DATA WAS UPDATED');
     }
 
@@ -377,4 +449,87 @@ class PegawaiController extends Controller
         $Pendidikan->delete();
         return redirect('/pegawai/dashboard/pelatihan')->with('success', 'Pendidikan deleted successfully.');
     }
+
+    //cuti
+
+    public function dataCuti()
+    {
+        $Cuti = Auth::user(); // Mendapatkan objek pengguna yang sudah terautentikasi
+        $user = $Cuti->cuti; // Mendapatkan data Cuti penggun
+        return view('pegawai.cuti.cuti', ['user' => $user]);
+    }
+
+    public function cuti()
+    {
+        return view('pegawai.cuti.cutiStore');
+    }
+
+
+    public function storeCuti(Request $request)
+    {
+        $request->validate([
+            'nip' => 'required',
+            'nama' => 'required',
+            'TMT_cuti' => 'required',
+            'keterangan' => 'required',
+            'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
+        ]);
+
+        $data = [
+            'nip' => $request->nip,
+            'nama' => $request->nama,
+            'keterangan' => $request->keterangan,
+            'TMT_cuti' => $request->TMT_cuti,
+        ];
+
+        if ($request->hasFile('dokumen')) {
+            $dokumen = $request->file('dokumen');
+            $dokumenPath = $dokumen->storeAs('public/dokumens', $dokumen->getClientOriginalName());
+            $data['dokumen'] = $dokumen->getClientOriginalName();
+        } else {
+            $dokumenPath = null;
+        }
+
+        Pelatihan::create($data);
+
+        return redirect('/pegawai/dashboard/pelatihan')->with('success', 'Pegawai created successfully.');
+    }
+
+
+    public function updateCutiForm($id)
+    {
+        $user = Pendidikan::find($id);
+        return view('pegawai.pelatihan.pelatihanUpdate', compact('user'));
+    }
+
+    public function updateCuti(Request $request, $id)
+    {
+        $data = Pelatihan::find($id);
+        $data->nip = $request->nip;
+        $data->pelatihan = $request->pelatihan;
+        $data->waktu_pelatihan = $request->waktu_pelatihan;
+
+        // Cek apakah ada file gambar yang diunggah untuk sampul data
+        if ($request->hasFile('dokumen')) {
+            // Proses unggah file gambar dan simpan dengan nama yang unik
+            $dokumenPath = $request->file('dokumen')->storeAs('public/dokumens', $request->file('dokumen')->getClientOriginalName());
+
+            // Perbarui nama file sampul data dalam basis data
+            $data->dokumen = $request->file('dokumen')->getClientOriginalName();
+        }
+
+        $data->save();
+        return redirect('/pegawai/dashboard/pelatihan')->with('DATA WAS UPDATED');
+    }
+
+    public function deleteCuti($id)
+    {
+        $Pendidikan = Pendidikan::find($id);
+        if (!$Pendidikan) {
+            return redirect('/pegawai/dashboard/pelatihan')->with('error', 'Pendidikan not found.');
+        }
+        $Pendidikan->delete();
+        return redirect('/pegawai/dashboard/pelatihan')->with('success', 'Pendidikan deleted successfully.');
+    }
+
 }

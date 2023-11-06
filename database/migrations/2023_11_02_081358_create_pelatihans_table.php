@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('pelatihan', function (Blueprint $table) {
             $table->id();
             $table->string('pelatihan');
+            $table->string('nip');
+            $table->foreign('nip')->references('nip')->on('pegawai');
             $table->date('waktu_pelatihan');
             $table->string('dokumen');
             $table->timestamps();

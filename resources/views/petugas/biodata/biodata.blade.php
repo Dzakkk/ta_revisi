@@ -40,8 +40,12 @@ $row = 1;
                 <td>{{ $item->telepon }}</td>
                 <td>{{ $item->alamat }}</td>
                 <td>{{ $item->karpeg }}</td>
-                <td><img src="{{ asset('storage/' . $item->photo_pas) }}" alt="photo"></td>
-                <td>
+                <td>@if (isset($user->photo_pas))
+                    <div class="">
+                        <img src="{{ asset('storage/photo_pas/' . $user->photo_pas) }}" alt="photo_pas"/>
+                    </div>
+                    @endif</td>  
+                    <td>
                     <div class="">
                         <a href="/petugas/updateBiodata/{{ $item->nik }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"

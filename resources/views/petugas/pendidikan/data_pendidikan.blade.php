@@ -9,7 +9,7 @@ $row = 1;
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">NAMA</th>
+            <th scope="col">NAMA PENDIDIKAN</th>
             <th scope="col">GELAR</th>
             <th scope="col">PROGRAM STUDI</th>
             <th scope="col">TAHUN LULUS</th>

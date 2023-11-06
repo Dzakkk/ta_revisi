@@ -4,22 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Events\NipEvent;
 use App\Models\Biodata;
+use App\Models\Cuti;
+use App\Models\Keluarga;
 use App\Models\Pangkat;
 use App\Models\Pegawai;
+use App\Models\Pelatihan;
 use App\Models\Pendidikan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('petugas.dashboard');
+        $jumlah = Biodata::count();
+        $boy = Biodata::where('jenis_kelamin', 'L')->count();
+        $girl = Biodata::where('jenis_kelamin', 'P')->count();
+        return view('petugas.component.section', ['jumlah' => $jumlah, 'boy' => $boy, 'girl' => $girl]);
     }
 
     public function pegawai()
     {
         $user = Pegawai::all();
         return view('petugas.user.kepegawaian', ['user' => $user]);
+    }
+
+    public function pelatihan()
+    {
+        $user = Pelatihan::all();
+        return view('petugas.component.pelatihan', ['user' => $user]);
+    }
+
+    public function keluarga()
+    {
+        $user = Keluarga::all();
+        return view('petugas.component.pelatihan', ['user' => $user]);
     }
 
     public function storeUserForm()
@@ -151,13 +170,10 @@ class AdminController extends Controller
             'telepon' => 'required',
             'karpeg' => 'required',
             'alamat' => 'required',
-            'photo_pas' => 'required|image|max:2048', // Assuming a maximum file size of 2MB.
+            'photo_pas' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
 
-        $file = $request->file('photo_pas');
-        $coverPath = $file->store('public'); // Store the image in the 'public' disk.
-
-        Biodata::create([
+        $data = [
             'nik' => $request->nik,
             'nip' => $request->nip,
             'nama' => $request->nama,
@@ -169,8 +185,18 @@ class AdminController extends Controller
             'telepon' => $request->telepon,
             'karpeg' => $request->karpeg,
             'alamat' => $request->alamat,
-            'photo_pas' => $coverPath, // Store the complete path.
-        ]);
+           
+        ];
+
+        if ($request->hasFile('photo_pas')) {
+            $photo_pas = $request->file('photo_pas');
+            $photo_pasPath = $photo_pas->storeAs('public/photo_pas', $photo_pas->getClientOriginalName());
+            $data['photo_pas'] = $photo_pas->getClientOriginalName();
+        } else {
+            $photo_pasPath = null;
+        }
+
+        Biodata::create($data);
 
         return redirect('/petugas/dashboard/biodata')->with('success', 'Pegawai created successfully.');
     }
@@ -185,7 +211,27 @@ class AdminController extends Controller
     public function updateBiodata(Request $request, $id)
     {
         $data = Biodata::find($id);
-        $data->update($request->all());
+        $data->nip = $request->nip;
+        $data->nama = $request->nama;
+        $data->agama = $request->agama;
+        $data->jenis_kelamin = $request->jenis_kelamin;
+        $data->status_perkawinan = $request->status_perkawinan;
+        $data->tempat_lahir = $request->tempat_lahir;
+        $data->tanggal_lahir = $request->tanggal_lahir;
+        $data->telepon = $request->telepon;
+        $data->karpeg = $request->karpeg;
+        $data->alamat = $request->alamat;
+
+        // Cek apakah ada file gambar yang diunggah untuk sampul data
+        if ($request->hasFile('photo_pas')) {
+            // Proses unggah file gambar dan simpan dengan nama yang unik
+            $photo_pasPath = $request->file('photo_pas')->storeAs('public/photo_pas', $request->file('photo_pas')->getClientOriginalName());
+
+            // Perbarui nama file sampul data dalam basis data
+            $data->photo_pas = $request->file('photo_pas')->getClientOriginalName();
+        }
+
+        $data->save();
         return redirect('/petugas/dashboard/biodata')->with('DATA WAS UPDATED');
     }
 
@@ -245,5 +291,11 @@ class AdminController extends Controller
         $data = Pendidikan::find($id);
         $data->update($request->all());
         return redirect('/petugas/dashboard/pendidikan')->with('DATA WAS UPDATED');
+    }
+
+    public function cuti()
+    {
+        $user = Cuti::all(); // Mendapatkan data Cuti penggun
+        return view('petugas.component.cuti', ['user' => $user]);
     }
 }

@@ -51,7 +51,7 @@ class Pegawai extends Authenticatable
 
     public function pelatihan()
     {
-        return $this->hasOne(Pelatihan::class, 'nip', 'nip');
+        return $this->hasMany(Pelatihan::class, 'nip', 'nip');
     }
 
 
