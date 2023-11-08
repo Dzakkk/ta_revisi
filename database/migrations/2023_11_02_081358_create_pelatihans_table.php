@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('pelatihan');
             $table->string('nip');
-            $table->foreign('nip')->references('nip')->on('pegawai');
+            $table->foreign('nip')->references('nip')->on('pegawai')->onDelete('cascade');;
             $table->date('waktu_pelatihan');
             $table->string('dokumen');
             $table->timestamps();

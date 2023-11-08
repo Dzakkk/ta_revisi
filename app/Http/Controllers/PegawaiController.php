@@ -15,7 +15,8 @@ class PegawaiController extends Controller
 
     public function dashboard()
     {
-        return view('pegawai.dashboard');
+        $user = Auth::user(); // Mendapatkan objek pengguna yang sudah terautentikasi
+        return view('pegawai.component.data_pegawai', ['user' => $user]);
     }
 
     public function dataBiodata()
@@ -459,9 +460,9 @@ class PegawaiController extends Controller
         return view('pegawai.cuti.cuti', ['user' => $user]);
     }
 
-    public function cuti()
-    {
-        return view('pegawai.cuti.cutiStore');
+    public function storeCutiForm()
+    {  
+                return view('pegawai.cuti.cutiStore');
     }
 
 
@@ -472,6 +473,7 @@ class PegawaiController extends Controller
             'nama' => 'required',
             'TMT_cuti' => 'required',
             'keterangan' => 'required',
+            'selesai' => 'required',
             'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
         ]);
 
@@ -480,6 +482,7 @@ class PegawaiController extends Controller
             'nama' => $request->nama,
             'keterangan' => $request->keterangan,
             'TMT_cuti' => $request->TMT_cuti,
+            'selesai' => $request->selesai,
         ];
 
         if ($request->hasFile('dokumen')) {

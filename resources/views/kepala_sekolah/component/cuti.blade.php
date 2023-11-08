@@ -1,7 +1,7 @@
-@extends('pegawai.dashboard')
+@extends('kepala_sekolah.dashboard')
 
 
-@section('data_pelatihan')
+@section('data_cuti')
 <?php
 $row = 1;
 ?>
@@ -10,8 +10,9 @@ $row = 1;
         <tr>
             <th scope="col">#</th>
             <th scope="col">NIP</th>
-            <th scope="col">pelatihan</th>
-            <th scope="col">waktu_pelatihan</th>
+            <th scope="col">TMT_cuti</th>
+            <th scope="col">nama</th>
+            <th scope="col">keterangan</th>
             <th scope="col">dokumen</th>
         </tr>
     </thead>
@@ -20,16 +21,17 @@ $row = 1;
             <tr>
                 <th scope="row">{{ $row }}</th>
                 <td>{{ $u->nip }}</td>
-                <td>{{ $u->pelatihan }}</td>
-                <td>{{ $u->waktu_pelatihan }}</td>
+                <td>{{ $u->TMT_cuti }}</td>
+                <td>{{ $u->nama }}</td>
+                <td>{{ $u->keterangan }}</td>
                 <td>@if (isset($u->dokumen))
-                    
-                        <img src="{{ asset('storage/dokumens/' . $u->dokumen) }}" alt="dokumen Buku" class="img-fluid"/>
-                 
+                    <div class="">
+                        <img src="{{ asset('storage/dokumens/' . $u->dokumen) }}" alt="dokumen Buku"/>
+                    </div>
                     @endif</td>
                 <td>
                     <div class="">
-                        <a href="/pegawai/updatePelatihan/{{ $u->id }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
+                        <a href="/petugas/updatePelatihan/{{ $u->id }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal-{{ $u->id }}">Delete</button>
                     </div>

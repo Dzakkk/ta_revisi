@@ -1,4 +1,4 @@
-@extends('petugas.dashboard')
+@extends('kepala_sekolah.dashboard')
 
 
 @section('data_biodata')
@@ -40,9 +40,9 @@ $row = 1;
                 <td>{{ $item->telepon }}</td>
                 <td>{{ $item->alamat }}</td>
                 <td>{{ $item->karpeg }}</td>
-                <td>@if (isset($item->photo_pas))
+                <td>@if (isset($user->photo_pas))
                     <div class="">
-                        <img src="{{ asset('storage/photo_pas/' . $item->photo_pas) }}" alt="photo_pas"/>
+                        <img src="{{ asset('storage/photo_pas/' . $user->photo_pas) }}" alt="photo_pas"/>
                     </div>
                     @endif</td>  
                     <td>

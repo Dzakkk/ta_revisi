@@ -13,10 +13,10 @@ $row = 1;
             <th scope="col">NAMA</th>
             <th scope="col">NIP</th>
             <th scope="col">agama</th>
-            <th scope="col">jenis_kelamin</th>
-            <th scope="col">status_perkawinan</th>
-            <th scope="col">tempat_lahir</th>
-            <th scope="col">tanggal_lahir</th>
+            <th scope="col">L/P</th>
+            <th scope="col">status</th>
+            <th scope="col">tempat lahir</th>
+            <th scope="col">tanggal lahir</th>
             <th scope="col">telepon</th>
             <th scope="col">karpeg</th>
             <th scope="col">alamat</th>
@@ -47,7 +47,7 @@ $row = 1;
                     @endif</td>
                 <td>
                     <div class="">
-                        <a href="/petugas/updateBiodata/{{ $user->nik }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
+                        <a href="/pegawai/updateBiodata/{{ $user->nik }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
                         {{-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal-{{ $item->nik }}">Delete</button> --}}
                     </div>

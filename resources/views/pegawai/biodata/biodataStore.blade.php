@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-8">
                 <label class="form-label" for="nama">Nama</label>
-                <input type="text" name="nama" class="form-control" id="nama" placeholder="324...">
+                <input type="text" name="nama" class="form-control" id="nama" value="{{ Auth::user()->nama }}">
             </div>
             <div class="col-md-4">
                 <label for="agama" class="form-label">agama</label>

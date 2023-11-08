@@ -31,7 +31,7 @@ $row = 1;
                     @endif</td>                
                     <td>
                     <div class="">
-                        <a href="/petugas/updateBiodata/{{ $user->id }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
+                        <a href="/pegawai/updateKeluarga/{{ $user->id }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
                         {{-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal-{{ $item->nik }}">Delete</button> --}}
                     </div>

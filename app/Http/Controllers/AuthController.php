@@ -37,7 +37,7 @@ class AuthController extends Controller
             } elseif (Auth::user()->role == 'petugas') {
                 return redirect('/petugas/dashboard');
             } elseif (Auth::user()->role == 'kepala_sekolah') {
-                return redirect('some/url');
+                return redirect('kepala/dashboard');
             }
         } else {
             return redirect('/login')->withErrors('NIP atau Password anda salah')->withInput();

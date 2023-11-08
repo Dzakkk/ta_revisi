@@ -40,17 +40,17 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
+                <span class="d-none d-lg-block">ThisStaff</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
+        {{-- <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
                 <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
-        </div><!-- End Search Bar -->
+        </div><!-- End Search Bar --> --}}
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -65,14 +65,14 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        <img src="{{ asset('storage/photo_pas/' . Auth::user()->biodata->photo_pas) }}" alt="Profile" class="rounded-circle">
                         <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->nama }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
                             <h6>{{ Auth::user()->nama }}</h6>
-                            <span>Web Designer</span>
+                            <span>{{ Auth::user()->role }}</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -129,7 +129,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link" href="/petugas/dashboard">
+                <a class="nav-link" href="/pegawai/dashboard">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -147,7 +147,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/petugas/dashboard/cuti">
+                        <a href="/pegawai/storeCuti">
                             <i class="bi bi-circle"></i><span>Ajukan Cuti</span>
                         </a>
                     </li>
@@ -232,31 +232,32 @@
         </div><!-- End Page Title -->
 
         <section class="section dashboard">
-            @yield('data_pegawai')
+                @yield('data_pegawai')
     
-            @yield('storePangkatForm')
-            @yield('data_pangkat')
-            @yield('updatePangkatForm')
-        
-            @yield('storeBiodataForm')
-            @yield('data_biodata')
-            @yield('updateBiodataForm')
-        
-            @yield('storePendidikanForm')
-            @yield('data_pendidikan')
-            @yield('updatePendidikanForm')
-        
-            @yield('storeKeluargaForm')
-            @yield('data_keluarga')
-            @yield('updateKeluargaForm')
-        
-            @yield('data_pelatihan')
-            @yield('storePelatihanForm')
-            @yield('updatePelatihanForm')
-
-            @yield('data_cuti')
-            @yield('storeCutiForm')
-            @yield('updateCutiForm')
+                @yield('storePangkatForm')
+                @yield('data_pangkat')
+                @yield('updatePangkatForm')
+            
+                @yield('storeBiodataForm')
+                @yield('data_biodata')
+                @yield('updateBiodataForm')
+            
+                @yield('storePendidikanForm')
+                @yield('data_pendidikan')
+                @yield('updatePendidikanForm')
+            
+                @yield('storeKeluargaForm')
+                @yield('data_keluarga')
+                @yield('updateKeluargaForm')
+            
+                @yield('data_pelatihan')
+                @yield('storePelatihanForm')
+                @yield('updatePelatihanForm')
+    
+                @yield('data_cuti')
+                @yield('storeCutiForm')
+                @yield('updateCutiForm')
+            
         </section>
 
     </main><!-- End #main -->
@@ -264,14 +265,14 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>myStaff</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you purchased the pro version. -->
             <!-- Licensing information: https://bootstrapmade.com/license/ -->
             <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            Created by <a href="https://github.com/Dzakkk">Dzakkk</a>
         </div>
     </footer><!-- End Footer -->
 

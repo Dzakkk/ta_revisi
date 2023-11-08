@@ -13,7 +13,7 @@ return new class extends Migration
     {Schema::create('pendidikan', function (Blueprint $table) {
         $table->id();
         $table->string('nip');
-        $table->foreign('nip')->references('nip')->on('pegawai');
+        $table->foreign('nip')->references('nip')->on('pegawai')->onDelete('cascade');;
         $table->string('nama_pendidikan');
         $table->string('gelar');
         $table->string('program');

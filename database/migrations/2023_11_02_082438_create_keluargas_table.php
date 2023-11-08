@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('keluarga', function (Blueprint $table) {
             $table->id();
             $table->string('nip');
-            $table->foreign('nip')->references('nip')->on('pegawai');
+            $table->foreign('nip')->references('nip')->on('pegawai')->onDelete('cascade');;
             $table->string('nama_pasangan');
             $table->string('jumlah_anak');
             $table->string('dokumen');

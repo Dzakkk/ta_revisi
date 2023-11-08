@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::create('biodata', function (Blueprint $table) {
         $table->bigIncrements('nik');
         $table->string('nip');
-        $table->foreign('nip')->references('nip')->on('pegawai');
+        $table->foreign('nip')->references('nip')->on('pegawai')->onDelete('cascade');;
         $table->string('nama');
         $table->string('agama');
         $table->string('karpeg')->nullable();

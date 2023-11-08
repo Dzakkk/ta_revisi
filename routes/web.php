@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KepalaController;
 use App\Http\Controllers\PegawaiController;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
@@ -29,17 +30,30 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    //Compenent Kepala Sekolah
+    Route::get('kepala_sekolah/dashboard/pelatihan', [KepalaController::class, 'pelatihan'])->name('kepala_sekolah.storeForm')->middleware('userAkses:kepala_sekolah');
+    Route::get('kepala_sekolah/dashboard/keluarga', [KepalaController::class, 'keluarga'])->name('kepala_sekolah.storeForm')->middleware('userAkses:kepala_sekolah');
+    Route::get('histori', [KepalaController::class, 'histori'])->name('histori')->middleware('userAkses:kepala_sekolah');
+    Route::get('kepala_sekolah/dashboard/cuti', [KepalaController::class, 'cuti'])->name('kepala_sekolah.cuti')->middleware('userAkses:kepala_sekolah');
+    Route::get('kepala_sekolah/dashboard/pegawai', [KepalaController::class, 'pegawai'])->name('kepala_sekolah.pegawai')->middleware('userAkses:kepala_sekolah');
+    Route::get('kepala_sekolah/dashboard/pangkat', [KepalaController::class, 'pangkat'])->name('kepala_sekolah.pangkat')->middleware('userAkses:kepala_sekolah');
+    Route::get('kepala_sekolah/dashboard/biodata', [KepalaController::class, 'biodata'])->name('kepala_sekolah.biodata')->middleware('userAkses:kepala_sekolah');
+    Route::get('kepala_sekolah/dashboard/pendidikan', [KepalaController::class, 'pendidikan'])->name('kepala_sekolah.Pendidikan')->middleware('userAkses:kepala_sekolah');
+
 
     //Halaman Dashboard
     Route::get('petugas/dashboard', [AdminController::class, 'dashboard'])->name('petugas.dashboard')->middleware('userAkses:petugas');
     Route::get('pegawai/dashboard', [PegawaiController::class, 'dashboard'])->name('pegawai.dashboard')->middleware('userAkses:pegawai');
+    Route::get('kepala/dashboard', [KepalaController::class, 'dashboard'])->name('kepalasekolah.dashboard')->middleware('userAkses:kepala_sekolah');
 
     //Component petugas
     Route::get('petugas/dashboard/pelatihan', [AdminController::class, 'pelatihan'])->name('petugas.storeForm')->middleware('userAkses:petugas');
     Route::get('petugas/dashboard/keluarga', [AdminController::class, 'keluarga'])->name('petugas.storeForm')->middleware('userAkses:petugas');
+    Route::get('histori', [AdminController::class, 'histori'])->name('petugas.storeForm')->middleware('userAkses:petugas');
+    Route::get('petugas/search', [AdminController::class, 'search']);
 
     //Cuti petugas
-    Route::get('petugas/dashboard/cuti', [AdminController::class, 'cuti'])->name('petugas.cuti')->middleware('userAkses:petugas');
+    Route::get('petugas/dashboard/cuti', [AdminController::class, 'cuti'])->name('petugas.cuti')->middleware('userAkses:petugas ');
 
     //Crud User petugas
     Route::get('petugas/dashboard/pegawai', [AdminController::class, 'pegawai'])->name('petugas.pegawai')->middleware('userAkses:petugas');

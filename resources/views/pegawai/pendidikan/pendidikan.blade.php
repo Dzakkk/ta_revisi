@@ -29,7 +29,7 @@ $row = 1;
                 <td>{{ $user->tahun_lulus }}</td>
                 <td>
                     <div class="">
-                        <a href="/petugas/updatePendidikan/{{ $user->id }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
+                        <a href="/pegawai/updatePendidikan/{{ $user->id }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
                         {{-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal-{{ $item->nik }}">Delete</button> --}}
                     </div>

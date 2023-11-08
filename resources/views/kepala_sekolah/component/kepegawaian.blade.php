@@ -1,7 +1,7 @@
-@extends('pegawai.dashboard')
+@extends('kepala_sekolah.dashboard')
 
 
-@section('data_pelatihan')
+@section('data_pegawai')
 <?php
 $row = 1;
 ?>
@@ -9,41 +9,34 @@ $row = 1;
     <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">NAMA</th>
             <th scope="col">NIP</th>
-            <th scope="col">pelatihan</th>
-            <th scope="col">waktu_pelatihan</th>
-            <th scope="col">dokumen</th>
+            <th scope="col">#</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($user as $u)
+        @foreach ($user as $item)
             <tr>
                 <th scope="row">{{ $row }}</th>
-                <td>{{ $u->nip }}</td>
-                <td>{{ $u->pelatihan }}</td>
-                <td>{{ $u->waktu_pelatihan }}</td>
-                <td>@if (isset($u->dokumen))
-                    
-                        <img src="{{ asset('storage/dokumens/' . $u->dokumen) }}" alt="dokumen Buku" class="img-fluid"/>
-                 
-                    @endif</td>
+                <td>{{ $item->nama }}</td>
+                <td>{{ $item->nip }}</td>
                 <td>
-                    <div class="">
-                        <a href="/pegawai/updatePelatihan/{{ $u->id }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
+                    <div class="d-flex">
+                        <a href="/petugas/updateUser/{{ $item->nip }}" class="btn btn-outline-primary btn-sm me-1">Ubah</a>
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal-{{ $u->id }}">Delete</button>
+                            data-bs-target="#confirmDeleteModal-{{ $item->nip }}">Delete</button>
                     </div>
                 </td>
             </tr>
             <?php
             $row++;
             ?>
-            <div class="modal fade" id="confirmDeleteModal-{{ $u->id }}" tabindex="-1"
-                aria-labelledby="confirmDeleteModalLabel-{{ $u->id }}" aria-hidden="true">
+            <div class="modal fade" id="confirmDeleteModal-{{ $item->nip }}" tabindex="-1"
+                aria-labelledby="confirmDeleteModalLabel-{{ $item->nip }}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="confirmDeleteModalLabel-{{ $u->id }}">Confirm Deletion
+                            <h5 class="modal-title" id="confirmDeleteModalLabel-{{ $item->nip }}">Confirm Deletion
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
@@ -54,7 +47,7 @@ $row = 1;
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
-                            <form action="{{ route('biodata.delete', $u->id) }}" method="POST">
+                            <form action="{{ route('pegawai.delete', $item->nip) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Confirm Delete</button>

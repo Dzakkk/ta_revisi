@@ -1,4 +1,4 @@
-@extends('petugas.dashboard')
+@extends('kepala_sekolah.dashboard')
 
 
 @section('data_keluarga')

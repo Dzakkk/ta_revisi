@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\NipEvent;
 use App\Models\Biodata;
 use App\Models\Cuti;
+use App\Models\Histori;
 use App\Models\Keluarga;
 use App\Models\Pangkat;
 use App\Models\Pegawai;
@@ -38,7 +39,13 @@ class AdminController extends Controller
     public function keluarga()
     {
         $user = Keluarga::all();
-        return view('petugas.component.pelatihan', ['user' => $user]);
+        return view('petugas.component.keluarga', ['user' => $user]);
+    }
+
+    public function histori()
+    {
+        $user = Histori::all();
+        return view('petugas.component.histori', ['user' => $user]);
     }
 
     public function storeUserForm()
@@ -297,5 +304,21 @@ class AdminController extends Controller
     {
         $user = Cuti::all(); // Mendapatkan data Cuti penggun
         return view('petugas.component.cuti', ['user' => $user]);
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+        $user = Biodata::where(function ($query) use ($keyword) {
+            $query->where('nama', 'like', "%" . $keyword . "%")
+                ->orWhere('nik', 'like', "%" . $keyword . "%")
+                ->orWhere('nip', 'like', "%" . $keyword . "%")
+                ->orWhere('status_perkawinan', 'like', "%" . $keyword . "%")
+                ->orWhere('tempat_lahir', 'like', "%" . $keyword . "%")
+                ->orWhere('jenis_kelamin', 'like', "%" . $keyword . "%");
+        })
+            ->paginate(5);
+
+        return view('petugas.biodata.biodata', compact('user'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 }
