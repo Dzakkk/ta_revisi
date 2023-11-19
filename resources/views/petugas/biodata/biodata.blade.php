@@ -41,8 +41,8 @@ $row = 1;
                 <td>{{ $item->alamat }}</td>
                 <td>{{ $item->karpeg }}</td>
                 <td>@if (isset($item->photo_pas))
-                    <div class="">
-                        <img src="{{ asset('storage/photo_pas/' . $item->photo_pas) }}" alt="photo_pas"/>
+                    <div class="" style="max-height: 70px; max-width: 50px;">
+                        <img src="{{ asset('storage/photo_pas/' . $item->photo_pas) }}" alt="photo_pas" style="width: 100%"/>
                     </div>
                     @endif</td>  
                     <td>

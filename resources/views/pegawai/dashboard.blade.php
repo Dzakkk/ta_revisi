@@ -38,7 +38,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="/pegawai/dashboard" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
                 <span class="d-none d-lg-block">ThisStaff</span>
             </a>
@@ -65,7 +65,12 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        <img src="{{ asset('storage/photo_pas/' . Auth::user()->biodata->photo_pas) }}" alt="Profile" class="rounded-circle">
+                        @if (isset($user->photo_pas))
+                            <div class="">
+                                <img src="{{ asset('storage/photo_pas/' . $user->photo_pas) }}" alt="photo_pas"
+                                    class="rounded-circle" />
+                            </div>
+                        @endif
                         <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->nama }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
@@ -78,12 +83,6 @@
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                <i class="bi bi-person"></i>
-                                <span>My Profile</span>
-                            </a>
-                        </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -136,8 +135,39 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#Pangkat-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Cuti</span><i
+                <a class="nav-link collapsed" href="/pegawai/dashboard/biodata">
+                    <i class="bi bi-person"></i>
+                    <span>biodata</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/pegawai/dashboard/keluarga">
+                    <i class="bi bi-people"></i>
+                    <span>Keluarga</span>
+                </a>
+            </li><!-- End F.A.Q Page Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/pegawai/dashboard/pangkat">
+                    <i class="bi bi-award"></i>
+                    <span>Pangkat</span>
+                </a>
+            </li><!-- End Register Page Nav -->
+
+            <!-- End Login Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/pegawai/dashboard/pendidikan">
+                    <i class="bi bi-book"></i>
+                    <span>pendidikan</span>
+                </a>
+            </li>
+            <li class="nav-heading">Pages</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#Pangkat-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-envelope"></i><span>Cuti</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="Pangkat-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -152,68 +182,25 @@
                         </a>
                     </li>
                 </ul>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#pegawai-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-person"></i>
-                        <span>Pelatihan</span><i
-                            class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="pegawai-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li>
-                            <a href="/pegawai/pelatihan">
-                                <i class="bi bi-circle"></i><span>data pelatihan</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/pegawai/dashboard/pelatihan">
-                                <i class="bi bi-circle"></i><span>tambah pelatihan</span>
-                            </a>
-                        </li>
-                    </ul>
-
-            <li class="nav-heading">Pages</li>
-
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/pegawai/dashboard/keluarga">
-                    <i class="bi bi-question-circle"></i>
-                    <span>Keluarga</span>
+                <a class="nav-link collapsed" data-bs-target="#pegawai-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-easel"></i>
+                    <span>Pelatihan</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-            </li><!-- End F.A.Q Page Nav -->
+                <ul id="pegawai-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="/pegawai/pelatihan">
+                            <i class="bi bi-circle"></i><span>data pelatihan</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pegawai/dashboard/pelatihan">
+                            <i class="bi bi-circle"></i><span>tambah pelatihan</span>
+                        </a>
+                    </li>
+                </ul>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/pegawai/dashboard/pelatihan">
-                    <i class="bi bi-envelope"></i>
-                    <span>Pelatihan</span>
-                </a>
-            </li><!-- End Contact Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/pegawai/dashboard/pangkat">
-                    <i class="bi bi-card-list"></i>
-                    <span>Pangkat</span>
-                </a>
-            </li><!-- End Register Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/pegawai/dashboard/biodata">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>biodata</span>
-                </a>
-            </li><!-- End Login Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/pegawai/dashboard/pendidikan">
-                    <i class="bi bi-dash-circle"></i>
-                    <span>pendidikan</span>
-                </a>
-            </li><!-- End Error 404 Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-blank.html">
-                    <i class="bi bi-file-earmark"></i>
-                    <span>Blank</span>
-                </a>
-            </li><!-- End Blank Page Nav -->
 
         </ul>
 
@@ -232,32 +219,35 @@
         </div><!-- End Page Title -->
 
         <section class="section dashboard">
-                @yield('data_pegawai')
-    
-                @yield('storePangkatForm')
-                @yield('data_pangkat')
-                @yield('updatePangkatForm')
-            
-                @yield('storeBiodataForm')
-                @yield('data_biodata')
-                @yield('updateBiodataForm')
-            
-                @yield('storePendidikanForm')
-                @yield('data_pendidikan')
-                @yield('updatePendidikanForm')
-            
-                @yield('storeKeluargaForm')
-                @yield('data_keluarga')
-                @yield('updateKeluargaForm')
-            
-                @yield('data_pelatihan')
-                @yield('storePelatihanForm')
-                @yield('updatePelatihanForm')
-    
-                @yield('data_cuti')
-                @yield('storeCutiForm')
-                @yield('updateCutiForm')
-            
+            @yield('data_pegawai')
+
+            @yield('storePangkatForm')
+            @yield('data_pangkat')
+            @yield('updatePangkatForm')
+
+            @yield('storeBiodataForm')
+            @yield('data_biodata')
+            @yield('updateBiodataForm')
+
+            @yield('storePendidikanForm')
+            @yield('data_pendidikan')
+            @yield('updatePendidikanForm')
+
+            @yield('storeKeluargaForm')
+            @yield('data_keluarga')
+            @yield('updateKeluargaForm')
+
+            @yield('data_pelatihan')
+            @yield('storePelatihanForm')
+            @yield('updatePelatihanForm')
+
+            @yield('data_cuti')
+            @yield('storeCutiForm')
+            @yield('updateCutiForm')
+
+            @yield('storeChildForm')
+            @yield('updateChildForm')
+
         </section>
 
     </main><!-- End #main -->

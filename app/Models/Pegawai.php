@@ -33,10 +33,6 @@ class Pegawai extends Authenticatable
     }
 
     // Definisikan hubungan ke keluarga
-    public function keluarga()
-    {
-        return $this->hasOne(Keluarga::class, 'nip', 'nip');
-    }
 
     // Definisikan hubungan ke pangkat
     public function pangkat()
@@ -46,14 +42,13 @@ class Pegawai extends Authenticatable
 
     public function cuti()
     {
-        return $this->hasOne(Cuti::class, 'nip', 'nip');
+        return $this->hasMany(Cuti::class, 'nip', 'nip');
     }
 
     public function pelatihan()
     {
         return $this->hasMany(Pelatihan::class, 'nip', 'nip');
     }
-
 
     protected $hidden = [
         'password',

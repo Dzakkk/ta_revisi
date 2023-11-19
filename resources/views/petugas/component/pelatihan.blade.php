@@ -9,24 +9,50 @@ $row = 1;
     <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">NAMA</th>
             <th scope="col">NIP</th>
-            <th scope="col">pelatihan</th>
+            <th scope="col">nama pelatihan</th>
+            <th scope="col">jenis_pelatihan</th>
+            <th scope="col">lama pelatihan</th>
             <th scope="col">waktu_pelatihan</th>
             <th scope="col">dokumen</th>
+            <th scope="col">#</th>
+
         </tr>
     </thead>
     <tbody>
         @foreach ($user as $u)
             <tr>
                 <th scope="row">{{ $row }}</th>
+                <td>{{ $u->pegawai->nama }}</td>
                 <td>{{ $u->nip }}</td>
-                <td>{{ $u->pelatihan }}</td>
+                <td>{{ $u->nama_pelatihan }}</td>
+                <td>{{ $u->jenis_pelatihan }}</td>
+                <td>{{ $u->lama_pelatihan }}</td>
                 <td>{{ $u->waktu_pelatihan }}</td>
-                <td>@if (isset($u->dokumen))
-                    <div class="">
-                        <img src="{{ asset('storage/dokumens/' . $u->dokumen) }}" alt="dokumen Buku"/>
-                    </div>
-                    @endif</td>
+                <td>
+                    @if (isset($u->dokumen))
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal-{{ $u->nip }}">
+                            Dokumen
+                        </button>
+                
+                        <!-- Modal -->
+                        <div class="modal fade" id="imageModal-{{ $u->nip }}" tabindex="-1" aria-labelledby="imageModalLabel-{{ $u->nip }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="imageModalLabel-{{ $u->nip }}">Dokumen</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="{{ asset('storage/dokumens/' . $u->dokumen) }}" alt="dokumen" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </td>
+                
                 <td>
                     <div class="">
                         <a href="/petugas/updatePelatihan/{{ $u->id }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>

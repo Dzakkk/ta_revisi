@@ -17,8 +17,8 @@
 
 <body>
 
-    <section class="h-100 gradient-form" style="background-color: #365992;">
-        <div class="container py-5 h-100">
+    <section class="h-100 gradient-form" style="background-color: #00B1FD;" >
+        <div class="container py-5 h-100" style="background-color: #00B1FD">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-10">
                     <div class="card rounded-3 text-black">
@@ -26,27 +26,29 @@
                             <div class="col-lg-6">
                                 <div class="card-body p-md-5 mx-md-4">
 
-                                    <form action="/login" method="POST">
+                                <form action="/login" method="POST">
                                         @csrf
-                                        <p>Login to your account</p>
+
+                                        <h1>Login</h1>
+                                        <p>Please login to your account</p>
 
                                         <div class="form-floating mb-4">
-                                            <input type="number" name="nip" id="" class="form-control"
-                                                placeholder="nik" value="{{ old('nip') }}">
-                                            <label for="" class="form-label"><i
+                                            <input type="text" name="nip" id="" class="form-control"
+                                                placeholder="nip" value="{{ old('nip') }}">
+                                            <label for="nip" class="form-label"><i
                                                     class="fa fa-envelope"></i>&nbsp;&nbsp;&nbsp;NIP</label>
                                         </div>
 
                                         <div class="form-floating mb-4">
                                             <input type="password" name="password" id="" class="form-control"
                                                 placeholder="password">
-                                            <label for="" class="form-label"><i
+                                            <label for="password" class="form-label"><i
                                                     class="fa fa-lock"></i>&nbsp;&nbsp;&nbsp;password</label>
                                         </div>
 
                                         <div class="text-center pt-1 mb-5 pb-1">
                                             <button
-                                                class="btn btn-primary container-fluid btn-block fa-lg gradient-custom-2 mb-3"
+                                                class="btn btn-warning container-fluid btn-block fa-lg gradient-custom-2 mb-3"
                                                 type="submit">
                                                 Log in
                                             </button>
@@ -61,6 +63,9 @@
 
                                     </form>
                                 </div>
+                            </div>
+                            <div class="col-lg-6">
+                            <img src="{{ asset('images/icon_login (1).png') }}" alt="login" width="400" >
                             </div>
                             @if ($errors->any())
                                 <div class="alert alert-danger">

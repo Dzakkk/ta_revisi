@@ -20,14 +20,31 @@
                 <label for="pangkat" class="form-label">pangkat</label>
                 <input type="text" name="pangkat" id="pangkat" class="form-control" value="{{ $user->pangkat }}">
             </div>
-            <div class="col-md-4">
-                <label class="form-label" for="golongan">golongan</label>
-                <input type="text" name="golongan" class="form-control" id="golongan" placeholder="324..." value="{{ $user->golongan }}">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label" for="tingkat">tingkat</label>
-                <input type="text" name="tingkat" class="form-control" id="tingkat" placeholder="324..." value="{{ $user->tingkat }}">
-            </div>
+            <div class="col-md-8">
+                <label for="golongan" class="form-label">golongan :</label>
+                <div class="input-group">
+                    <select class="form-select" id="golongan_select" name="golongan">
+                        <option value="{{ $user->golongan }}">{{ $user->golongan }}</option>
+                        <option value="I">I</option>
+                        <option value="II">II</option>
+                        <option value="III">III</option>
+                        <option value="IV">IV</option>
+                    </select>
+                </div>
+            </div> 
+            <div class="col-md-8">
+                <label for="tingkat" class="form-label">Tingkat :</label>
+                <div class="input-group">
+                    <select class="form-select" id="tingkat_select" name="tingkat">
+                        <option value="{{ $user->tingkat }}">{{ $user->tingkat }}</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </div>
+            </div> 
             <div class="col-12 pb-4">
                 <button type="submit" class="btn btn-primary">Update Data</button>
             </div>

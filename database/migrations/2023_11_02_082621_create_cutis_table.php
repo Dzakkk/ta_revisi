@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('nip')->references('nip')->on('pegawai')->onDelete('cascade');;
             $table->date('TMT_cuti');
             $table->date('selesai');
+            $table->enum('status', ['Diajukan', 'Ditolak', 'Disetujui']);
             $table->string('keterangan');
             $table->string('dokumen');
             $table->timestamps();

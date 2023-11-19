@@ -8,6 +8,10 @@
                 <h5 for="nama_pendidikan" class="form-h5">Biodata Pegawai</h5>
             </div>
             <div class="col-md-6">
+                <label class="form-label" for="nip">NIP</label>
+                <input type="text" name="nip" class="form-control" id="nip" placeholder="324...">
+            </div>
+            <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Password</label>
                 <input type="password" name="password" class="form-control" id="inputPassword4">
             </div>
@@ -15,15 +19,17 @@
                 <label for="nama" class="form-label">Nama Lengkap</label>
                 <input type="text" name="nama" class="form-control" id="nama" placeholder="Udin syamsudin">
             </div>
-            <div class="col-md-4">
-                <label for="inputRole" class="form-label">User</label>
-                <input type="text" name="role" class="form-control" id="inputRole" value="pegawai">
-            </div>
-            <div class="col-md-8">
-                <label class="form-label" for="nip">NIP</label>
-                <input type="text" name="nip" class="form-control" id="nip" placeholder="324...">
-            </div>
-            
+            <div class="col-md-6">
+                <label for="role" class="form-label">role :</label>
+                <div class="input-group">
+                    <select class="form-select" id="role_select" name="role">
+                        <option value="">Pilih role</option>
+                        <option value="pegawai">pegawai</option>
+                        <option value="petugas">petugas</option>
+                        <option value="kepala_sekolah">kepala sekolah</option>
+                    </select>
+                </div>
+            </div> 
             <div class="col-12 pb-4">
                 <button type="submit" class="btn btn-primary">Tambah Data</button>
             </div>

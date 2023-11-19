@@ -11,6 +11,8 @@ $row = 1;
             <th scope="col">#</th>
             <th scope="col">NAMA</th>
             <th scope="col">NIP</th>
+            <th scope="col">TAHUN PENGANGKATAN</th>
+            <th scope="col">TAHUN PENSIUN</th>
             <th scope="col">#</th>
         </tr>
     </thead>
@@ -20,6 +22,8 @@ $row = 1;
                 <th scope="row">{{ $row }}</th>
                 <td>{{ $user->nama }}</td>
                 <td>{{ $user->nip }}</td>
+                <td>{{ $user->birthDate1 }}</td>
+                <td>{{ $user->turns60Date  }}</td>
                 <td>
                     <div class="d-flex">
                         <a href="/petugas/updateUser/{{ $user->nip }}" class="btn btn-outline-primary btn-sm me-1">Ubah</a>

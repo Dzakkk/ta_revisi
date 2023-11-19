@@ -134,10 +134,27 @@
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#pegawai-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person"></i>
+                    <span>Pegawai</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="pegawai-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="/petugas/dashboard/pegawai">
+                            <i class="bi bi-circle"></i><span>user Pegawai</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/petugas/storeUser">
+                            <i class="bi bi-circle"></i><span>Tambah user</span>
+                        </a>
+                    </li>
+                </ul>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Biodata-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Biodata</span><i
+                    <i class="bi bi-people"></i><span>Biodata</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="Biodata-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -154,7 +171,7 @@
                 </ul>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Pendidikan-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>Pendidikan</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-book"></i><span>Pendidikan</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="Pendidikan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -170,7 +187,7 @@
                 </ul>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Pangkat-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Pangkat</span><i
+                    <i class="bi bi-award"></i><span>Pangkat</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="Pangkat-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -185,51 +202,34 @@
                         </a>
                     </li>
                 </ul>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#pegawai-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-person"></i>
-                        <span>Pegawai</span><i
-                            class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="pegawai-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li>
-                            <a href="/petugas/dashboard/pegawai">
-                                <i class="bi bi-circle"></i><span>user Pegawai</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/petugas/storeUser">
-                                <i class="bi bi-circle"></i><span>Tambah user</span>
-                            </a>
-                        </li>
-                    </ul>
+                
 
             <li class="nav-heading">Pages</li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/petugas/dashboard/keluarga">
-                    <i class="bi bi-question-circle"></i>
+                    <i class="bi bi-people-fill"></i>
                     <span>Keluarga</span>
                 </a>
             </li><!-- End F.A.Q Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/petugas/dashboard/pelatihan">
-                    <i class="bi bi-envelope"></i>
+                    <i class="bi bi-easel"></i>
                     <span>Pelatihan</span>
                 </a>
             </li><!-- End Contact Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/petugas/dashboard/cuti">
-                    <i class="bi bi-card-list"></i>
+                    <i class="bi bi-envelope-open"></i>
                     <span>Cuti</span>
                 </a>
             </li><!-- End Register Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/histori">
-                    <i class="bi bi-box-arrow-in-right"></i>
+                    <i class="bi bi-archive"></i>
                     <span>History</span>
                 </a>
             </li><!-- End Login Page Nav -->

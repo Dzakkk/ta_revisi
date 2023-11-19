@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('pelatihan', function (Blueprint $table) {
             $table->id();
-            $table->string('pelatihan');
+            $table->string('nama_pelatihan');
+            $table->string('jenis_pelatihan');
             $table->string('nip');
             $table->foreign('nip')->references('nip')->on('pegawai')->onDelete('cascade');;
             $table->date('waktu_pelatihan');
+            $table->string('lama_pelatihan');
             $table->string('dokumen');
             $table->timestamps();
-        });
+        }); 
     }
 
     /**

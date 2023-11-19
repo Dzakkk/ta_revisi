@@ -12,21 +12,31 @@
                 <label for="inpnip" class="form-label">NIP</label>
                 <input type="text" name="nip" class="form-control" id="inpnip" value="{{ $user->nip }}">
             </div>
-            <div class="col-md-8">
-                <label class="form-label" for="nama_pendidikan">nama_pendidikan</label>
-                <input type="text" name="nama_pendidikan" class="form-control" id="nama_pendidikan" placeholder="324..." value="{{ $user->nama_pendidikan }}">
+            <div class="col-md-6">
+                <label class="form-label" for="tahun_lulus">Tahun Lulus</label>
+                <input type="date" name="tahun_lulus" class="form-control" id="tahun_lulus" value="{{ $user->tahun_lulus }}">
             </div>
-            <div class="col-md-4">
-                <label for="gelar" class="form-label">gelar</label>
-                <input type="text" name="gelar" id="gelar" class="form-control" value="{{ $user->gelar }}">
+            <div class="col-md-6">
+                <label for="gelar" class="form-label">Gelar :</label>
+                <div class="input-group">
+                    <select class="form-select" id="gelar_select" name="gelar">
+                        <option value="{{ $user->gelar }}">{{ $user->gelar }}</option>
+                        <option value="Sarjana">Sarjana</option>
+                        <option value="Magister">Magister</option>
+                        <option value="Dokter">Dokter</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label class="form-label" for="program">program</label>
-                <input type="text" name="program" class="form-control" id="program" placeholder="324..." value="{{ $user->program }}">
+                <input type="text" name="program" class="form-control" id="program" value="{{ $user->program }}">
             </div>
-            <div class="col-md-4">
-                <label class="form-label" for="tahun_lulus">tahun_lulus</label>
-                <input type="date" name="tahun_lulus" class="form-control" id="tahun_lulus" placeholder="324..." value="{{ $user->tahun_lulus }}">
+            <div class="col-md-6">
+                <label class="form-label" for="nama_pendidikan">nama_pendidikan</label>
+                <input type="text" name="nama_pendidikan" class="form-control" id="nama_pendidikan" value="{{ $user->nama_pendidikan }}">
+            </div>
+            <div class="col-12 pb-4">
+                <button type="submit" class="btn btn-primary">Tambah Data</button>
             </div>
             <div class="col-12 pb-4">
                 <button type="submit" class="btn btn-primary">Update Data</button>

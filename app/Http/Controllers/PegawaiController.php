@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Biodata;
+use App\Models\Child;
+use App\Models\Cuti;
 use App\Models\Keluarga;
 use App\Models\Pangkat;
 use App\Models\Pelatihan;
 use App\Models\Pendidikan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,9 +18,31 @@ class PegawaiController extends Controller
 
     public function dashboard()
     {
-        $user = Auth::user(); // Mendapatkan objek pengguna yang sudah terautentikasi
+        $user = Auth::user();
+
+        // Assuming NIP format is YYYYMMDD
+        $year = substr($user->nip, 0, 4);
+        $month = substr($user->nip, 4, 2);
+        $day = substr($user->nip, 6, 2);
+
+        // Create a Carbon instance for the birthdate
+        $birthDate = Carbon::createFromDate($year, $month, $day);
+
+        // Calculate the date when the person turns 60
+        $turns60Date = $birthDate->addYears(60);
+
+        // Add a new attribute to the user with the calculated date
+        $user->turns60Date = $turns60Date->toDateString();
+
+        // Add Tanggal Pengangkatan
+        $year1 = substr($user->nip, 8, 4);
+        $month1 = substr($user->nip, 12, 2);
+        $birthDate1 = Carbon::createFromDate($year1, $month1);
+        $user->birthDate1 = $birthDate1->format('Y-m');
+
         return view('pegawai.component.data_pegawai', ['user' => $user]);
     }
+
 
     public function dataBiodata()
     {
@@ -60,7 +85,7 @@ class PegawaiController extends Controller
             'telepon' => 'required',
             'alamat' => 'required',
             'karpeg' => 'required',
-            'photo_pas' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
+            'photo_pas' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $data = [
@@ -76,7 +101,7 @@ class PegawaiController extends Controller
             'alamat' => $request->alamat,
             'karpeg' => $request->karpeg,
 
-           
+
         ];
 
         if ($request->hasFile('photo_pas')) {
@@ -140,19 +165,26 @@ class PegawaiController extends Controller
 
     public function dataKeluarga()
     {
-        $user = Auth::user(); // Mendapatkan objek pengguna yang sudah terautentikasi
-        $Keluarga = $user->keluarga; // Mendapatkan data Keluarga penggun
-        return view('pegawai.keluarga.keluarga', ['user' => $Keluarga]);
+        $user = Auth::user();
+        $biodata = $user->biodata;
+
+        if ($biodata) {
+            $keluarga = $biodata->keluarga;
+            $child = $biodata->child;
+
+            return view('pegawai.keluarga.keluarga', ['user' => $keluarga, 'child' => $child]);
+        }
+        return view('pegawai.keluarga.keluargaStore');
     }
 
     public function keluarga()
     {
         $user = Auth::user();
-        $isidata = Keluarga::where('nip', $user->nip)->first();
+        $isidata = $user->biodata->keluarga;
 
         if ($isidata) {
-            if (!empty($isidata->nama_pasangan) && !empty($isidata->jumlah_anak)) {
-                // Data Keluarga sudah lengkap, alihkan ke halaman 'pegawai/Keluarga'
+            if (!empty($isidata->nama_pasangan) && !empty($isidata->tempat_lahir)) {
+                // Data Keluarga sudah lengkap, alihkan ke halaman 'pegawai/keluarga'
                 return redirect('/pegawai/keluarga');
             }
         }
@@ -161,20 +193,25 @@ class PegawaiController extends Controller
     }
 
 
+
+
     public function storeKeluarga(Request $request)
     {
         $request->validate([
-            'nip' => 'required',
+            'nik' => 'required',
             'nama_pasangan' => 'required',
-            'jumlah_anak' => 'required',
-            'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
+            'tanggal_lahir' => 'required',
+            'tempat_lahir' => 'required',
+            'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
 
         $data = [
-            'nip' => $request->nip,
+            'nik' => $request->nik,
             'nama_pasangan' => $request->nama_pasangan,
-            'jumlah_anak' => $request->jumlah_anak,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'tempat_lahir' => $request->tempat_lahir,
+
         ];
 
         if ($request->hasFile('dokumen')) {
@@ -202,9 +239,11 @@ class PegawaiController extends Controller
     {
         $data = Keluarga::find($id);
 
-        $data->nip = $request->nip;
+        $data->nik = $request->nik;
         $data->nama_pasangan = $request->nama_pasangan;
-        $data->jumlah_anak = $request->jumlah_anak;
+        $data->tempat_lahir = $request->tempat_lahir;
+        $data->tanggal_lahir = $request->tanggal_lahir;
+
 
         // Cek apakah ada file gambar yang diunggah untuk sampul data
         if ($request->hasFile('dokumen')) {
@@ -227,6 +266,51 @@ class PegawaiController extends Controller
         }
         $Keluarga->delete();
         return redirect('/pegawai/dashboard/keluarga')->with('success', 'Keluarga deleted successfully.');
+    }
+
+    //Child
+    public function storeChildForm()
+    {
+        return view('pegawai.keluarga.storeChild');
+    }
+
+    public function storeChild(Request $request)
+    {
+        $request->validate([
+            'nik' => 'required',
+            'nama_anak' => 'required',
+            'jenis_kelamin' => 'required',
+            'pendidikan' => 'required',
+            'waktu_masuk' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+        ]);
+
+        Child::create([
+            'nik' => $request->nik,
+            'nama_anak' => $request->nama_anak,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'pendidikan' => $request->pendidikan,
+            'waktu_masuk' => $request->waktu_masuk,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'tempat_lahir' => $request->tempat_lahir,
+
+        ]);
+
+        return redirect('/pegawai/dashboard/keluarga')->with('success', 'Pegawai created successfully.');
+    }
+
+    public function updateChildForm($id)
+    {
+        $user = Child::find($id);
+        return view('pegawai.keluarga.updateChild', compact('user'));
+    }
+
+    public function updateChild(Request $request, $id)
+    {
+        $data = Child::find($id);
+        $data->update($request->all());
+        return redirect('/pegawai/dashboard/keluarga')->with('DATA WAS UPDATED');
     }
 
     //Pangkat Pegawai
@@ -390,15 +474,19 @@ class PegawaiController extends Controller
     {
         $request->validate([
             'nip' => 'required',
-            'pelatihan' => 'required',
+            'nama_pelatihan' => 'required',
             'waktu_pelatihan' => 'required',
-            'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
+            'jenis_pelatihan' => 'required',
+            'lama_pelatihan' => 'required',
+            'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $data = [
             'nip' => $request->nip,
-            'pelatihan' => $request->pelatihan,
+            'nama_pelatihan' => $request->nama_pelatihan,
             'waktu_pelatihan' => $request->waktu_pelatihan,
+            'jenis_pelatihan' => $request->jenis_pelatihan,
+            'lama_pelatihan' => $request->lama_pelatihan,
         ];
 
         if ($request->hasFile('dokumen')) {
@@ -455,14 +543,14 @@ class PegawaiController extends Controller
 
     public function dataCuti()
     {
-        $Cuti = Auth::user(); // Mendapatkan objek pengguna yang sudah terautentikasi
-        $user = $Cuti->cuti; // Mendapatkan data Cuti penggun
+        $cutiPegawai = Auth::user(); // Mendapatkan objek pengguna yang sudah terautentikasi
+        $user = $cutiPegawai->cuti; // Mendapatkan data Cuti penggun
         return view('pegawai.cuti.cuti', ['user' => $user]);
     }
 
     public function storeCutiForm()
-    {  
-                return view('pegawai.cuti.cutiStore');
+    {
+        return view('pegawai.cuti.cutiStore');
     }
 
 
@@ -474,7 +562,7 @@ class PegawaiController extends Controller
             'TMT_cuti' => 'required',
             'keterangan' => 'required',
             'selesai' => 'required',
-            'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
+            'dokumen' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $data = [
@@ -483,6 +571,7 @@ class PegawaiController extends Controller
             'keterangan' => $request->keterangan,
             'TMT_cuti' => $request->TMT_cuti,
             'selesai' => $request->selesai,
+
         ];
 
         if ($request->hasFile('dokumen')) {
@@ -493,24 +582,24 @@ class PegawaiController extends Controller
             $dokumenPath = null;
         }
 
-        Pelatihan::create($data);
+        Cuti::create($data);
 
-        return redirect('/pegawai/dashboard/pelatihan')->with('success', 'Pegawai created successfully.');
+        return redirect('/pegawai/cuti')->with('success', 'Pegawai created successfully.');
     }
 
 
     public function updateCutiForm($id)
     {
-        $user = Pendidikan::find($id);
+        $user = Cuti::find($id);
         return view('pegawai.pelatihan.pelatihanUpdate', compact('user'));
     }
 
     public function updateCuti(Request $request, $id)
     {
-        $data = Pelatihan::find($id);
+        $data = Cuti::find($id);
         $data->nip = $request->nip;
-        $data->pelatihan = $request->pelatihan;
-        $data->waktu_pelatihan = $request->waktu_pelatihan;
+        $data->cuti = $request->cuti;
+        $data->waktu_cuti = $request->waktu_cuti;
 
         // Cek apakah ada file gambar yang diunggah untuk sampul data
         if ($request->hasFile('dokumen')) {
@@ -534,5 +623,4 @@ class PegawaiController extends Controller
         $Pendidikan->delete();
         return redirect('/pegawai/dashboard/pelatihan')->with('success', 'Pendidikan deleted successfully.');
     }
-
 }

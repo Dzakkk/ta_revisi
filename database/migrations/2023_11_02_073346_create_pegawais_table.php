@@ -25,6 +25,7 @@ return new class extends Migration
         $table->string('telepon');
         $table->string('alamat');
         $table->string('photo_pas');
+        $table->index('nik');
         $table->timestamps();
     });
 }

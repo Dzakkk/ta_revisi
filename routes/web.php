@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\KepalaController;
 use App\Http\Controllers\PegawaiController;
 use Illuminate\Routing\RouteGroup;
@@ -52,8 +53,12 @@ Route::middleware('auth')->group(function () {
     Route::get('histori', [AdminController::class, 'histori'])->name('petugas.storeForm')->middleware('userAkses:petugas');
     Route::get('petugas/search', [AdminController::class, 'search']);
 
+    //view data
+    Route::get('petugas/dashboard/lakilaki', [AdminController::class, 'lakilaki'])->middleware('userAkses:petugas');
+    Route::get('petugas/dashboard/perempuan', [AdminController::class, 'perempuan'])->middleware('userAkses:petugas');
+
     //Cuti petugas
-    Route::get('petugas/dashboard/cuti', [AdminController::class, 'cuti'])->name('petugas.cuti')->middleware('userAkses:petugas ');
+    Route::get('petugas/dashboard/cuti', [AdminController::class, 'cuti'])->name('petugas.cuti')->middleware('userAkses:petugas');
 
     //Crud User petugas
     Route::get('petugas/dashboard/pegawai', [AdminController::class, 'pegawai'])->name('petugas.pegawai')->middleware('userAkses:petugas');
@@ -103,6 +108,15 @@ Route::middleware('auth')->group(function () {
     Route::put('pegawai/updateKeluarga/{id}', [PegawaiController::class, 'updateKeluarga'])->name('Keluarga.update')->middleware('userAkses:pegawai');
     Route::delete('pegawai/keluarga/{id}', [PegawaiController::class, 'deleteKeluarga'])->name('Keluarga.delete')->middleware('userAkses:pegawai');
 
+    //Anak Pegawai
+    // Route::get('pegawai/dashboard/keluarga', [PegawaiController::class, 'keluarga'])->name('pegawai.keluarga')->middleware('userAkses:pegawai');
+    // Route::get('pegawai/keluarga', [PegawaiController::class, 'dataKeluarga'])->name('pegawai.datakeluarga')->middleware('userAkses:pegawai');
+    Route::get('pegawai/storeChild', [PegawaiController::class, 'storeChildForm'])->name('Keluarga.storeForm')->middleware('userAkses:pegawai');
+    Route::post('pegawai/storeChild', [PegawaiController::class, 'storeChild'])->name('Child.store')->middleware('userAkses:pegawai');
+    Route::get('pegawai/updateChild/{id}', [PegawaiController::class, 'updateChildForm'])->name('Child.updateForm')->middleware('userAkses:pegawai');
+    Route::put('pegawai/updateChild/{id}', [PegawaiController::class, 'updateChild'])->name('Child.update')->middleware('userAkses:pegawai');
+    Route::delete('pegawai/child/{id}', [PegawaiController::class, 'deleteChild'])->name('child.delete')->middleware('userAkses:pegawai');
+
     //Pangkat Pegawai
     Route::get('pegawai/dashboard/pangkat', [PegawaiController::class, 'pangkat'])->name('pegawai.pangkat')->middleware('userAkses:pegawai');
     Route::get('pegawai/pangkat', [PegawaiController::class, 'dataPangkat'])->name('pegawai.dataPangkat')->middleware('userAkses:pegawai');
@@ -131,11 +145,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('pegawai/pelatihan/{id}', [PegawaiController::class, 'deletePelatihan'])->name('Pelatihan.delete')->middleware('userAkses:pegawai');
 
     //Cuti Pegawai
-    Route::get('pegawai/dashboard/cuti', [PegawaiController::class, 'cuti'])->name('pegawai.cuti')->middleware('userAkses:pegawai');
+    Route::get('pegawai/dashboard/cuti', [PegawaiController::class, 'dataCuti'])->name('pegawai.cuti')->middleware('userAkses:pegawai');
     Route::get('pegawai/cuti', [PegawaiController::class, 'dataCuti'])->name('pegawai.dataCuti')->middleware('userAkses:pegawai');
     Route::get('pegawai/storeCuti', [PegawaiController::class, 'storeCutiForm'])->name('Cuti.storeForm')->middleware('userAkses:pegawai');
     Route::post('pegawai/storeCuti', [PegawaiController::class, 'storeCuti'])->name('Cuti.store')->middleware('userAkses:pegawai');
     Route::get('pegawai/updateCuti/{id}', [PegawaiController::class, 'updateCutiForm'])->name('Cuti.updateForm')->middleware('userAkses:pegawai');
     Route::put('pegawai/updateCuti/{id}', [PegawaiController::class, 'updateCuti'])->name('Cuti.update')->middleware('userAkses:pegawai');
-    Route::delete('pegawai/cuti/{id}', [PegawaiController::class, 'deleteCuti'])->name('Cuti.delete')->middleware('userAkses:pegawai');
+    Route::delete('pegawai/cuti/{id}', [PegawaiController::class, 'deleteCuti'])->name('cuti.delete')->middleware('userAkses:pegawai');
+
+    //Component Route
+    Route::get('pendidikan/filter', [ComponentController::class, 'filter'])->middleware('userAkses:petugas');
+    Route::patch('petugas/pengajuan/{id}', [AdminController::class, 'updateCuti'])->middleware('userAkses:petugas')->name('cuti.updateStatus');
+
 });

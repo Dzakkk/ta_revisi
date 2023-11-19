@@ -2,15 +2,15 @@
 
 @section('updatePendidikanForm')
     <div class="container shadow pt-2 mt-2" style="width: 800px">
-        <form class="row g-3 d-flex" action="/petugas/updatePendidikan/{{ $user->nik }}" method="POST">
+        <form class="row g-3 d-flex" action="/petugas/updatePendidikan/{{ $user->nip }}" method="POST">
             @csrf
             @method('PUT')
             <div class="col-md-12">
                 <h5 for="nama_pendidikan" class="form-h5">Pangkat Pegawai</h5>
             </div>
             <div class="col-md-6">
-                <label for="inpnik" class="form-label">nik</label>
-                <input type="text" name="nik" class="form-control" id="inpnik" value="{{ $user->nik }}">
+                <label for="inpnik" class="form-label">nip</label>
+                <input type="text" name="nip" class="form-control" id="inpnip" value="{{ $user->nip }}">
             </div>
             <div class="col-md-4">
                 <label for="inptanggal_lulus" class="form-label">tanggal_lulus</label>

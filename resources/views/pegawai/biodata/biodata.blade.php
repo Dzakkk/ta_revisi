@@ -26,7 +26,7 @@ $row = 1;
         </tr>
     </thead>
     <tbody>
-        {{-- @foreach ($user as $item) --}}
+        {{-- @foreach ($user as $user) --}}
             <tr>
                 <th scope="row">{{ $row }}</th>
                 <td>{{ $user->nik }}</td>
@@ -41,27 +41,27 @@ $row = 1;
                 <td>{{ $user->karpeg }}</td>
                 <td>{{ $user->alamat }}</td>
                 <td>@if (isset($user->photo_pas))
-                    <div class="">
-                        <img src="{{ asset('storage/photo_pas/' . $user->photo_pas) }}" alt="photo_pas"/>
+                    <div class="" style="max-height: 70px; max-width: 50px;">
+                        <img src="{{ asset('storage/photo_pas/' . $user->photo_pas) }}" alt="photo_pas" style="width: 100%"/>
                     </div>
-                    @endif</td>
+                    @endif</td>  
                 <td>
                     <div class="">
                         <a href="/pegawai/updateBiodata/{{ $user->nik }}" class="btn btn-outline-primary btn-sm me-1 mb-1">Ubah</a>
                         {{-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal-{{ $item->nik }}">Delete</button> --}}
+                            data-bs-target="#confirmDeleteModal-{{ $user->nik }}">Delete</button> --}}
                     </div>
                 </td>
             </tr>
             <?php
             $row++;
             ?>
-            {{-- <div class="modal fade" id="confirmDeleteModal-{{ $item->nik }}" tabindex="-1"
-                aria-labelledby="confirmDeleteModalLabel-{{ $item->nik }}" aria-hidden="true">
+            {{-- <div class="modal fade" id="confirmDeleteModal-{{ $user->nik }}" tabindex="-1"
+                aria-labelledby="confirmDeleteModalLabel-{{ $user->nik }}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="confirmDeleteModalLabel-{{ $item->nik }}">Confirm Deletion
+                            <h5 class="modal-title" id="confirmDeleteModalLabel-{{ $user->nik }}">Confirm Deletion
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
@@ -72,7 +72,7 @@ $row = 1;
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
-                            <form action="{{ route('biodata.delete', $item->nik) }}" method="POST">
+                            <form action="{{ route('biodata.delete', $user->nik) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Confirm Delete</button>

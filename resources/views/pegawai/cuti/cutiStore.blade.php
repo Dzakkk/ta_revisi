@@ -7,13 +7,13 @@
             <div class="col-md-12">
                 <h5 for="nama_pendidikan" class="form-h5">Cuti Pegawai</h5>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <label for="inpnip" class="form-label">NIP</label>
                 <input type="text" name="nip" class="form-control" id="inpnip" value="{{ Auth::user()->nip }}">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-7">
                 <label for="nama" class="form-label">nama</label>
-                <input type="text" name="nama" id="nama" class="form-control">
+                <input type="text" name="nama" id="nama" class="form-control" value="{{ Auth::user()->nama }}">
             </div>
             <div class="col-md-4">
                 <label class="form-label" for="TMT_cuti">waktu cuti</label>

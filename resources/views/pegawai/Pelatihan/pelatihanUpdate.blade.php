@@ -8,21 +8,36 @@
             <div class="col-md-12">
                 <h5 for="nama_pendidikan" class="form-h5">Pelatihan Pegawai</h5>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label for="inpnip" class="form-label">NIP</label>
                 <input type="text" name="nip" class="form-control" id="inpnip" value="{{ $user->nip }}">
             </div>
-            <div class="col-md-8">
-                <label class="form-label" for="pelatihan">pelatihan</label>
-                <input type="text" name="pelatihan" class="form-control" id="pelatihan" placeholder="324..." value="{{ $user->pelatihan }}">
+            <div class="col-md-6">
+                <label class="form-label" for="nama_pelatihan">nama_pelatihan</label>
+                <input type="text" name="nama_pelatihan" class="form-control" id="nama_pelatihan" value="{{ $user->nama_pelatihan }}">
+            </div>
+            <div class="col-md-6">
+                <label for="jenis_pelatihan" class="form-label">jenis pelatihan :</label>
+                <div class="input-group">
+                    <select class="form-select" id="jenis_pelatihan_select" name="jenis_pelatihan">
+                        <option value="{{ $user->jenis_pelatihan }}">{{ $user->jenis_pelatihan }}</option>
+                        <option value="Diklat Kepemimpinan">Diklat Kepemimpinan</option>
+                        <option value="Diklat Fungsional">Diklat Fungsional</option>
+                        <option value="Diklat Teknis">Diklat Teknis</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="lama_pelatihan" class="form-label">lama_pelatihan</label>
+                <input type="text" name="lama_pelatihan" id="lama_pelatihan" class="form-control" value="{{ $user->lama_pelatihan }}">
             </div>
             <div class="col-md-4">
                 <label for="waktu_pelatihan" class="form-label">waktu_pelatihan</label>
-                <input type="text" name="waktu_pelatihan" id="waktu_pelatihan" class="form-control" value="{{ $user->waktu_pelatihan }}">
+                <input type="date" name="waktu_pelatihan" id="waktu_pelatihan" class="form-control" value="{{ $user->waktu_pelatihan }}">
             </div>
             <div class="col-md-4">
                 <label class="form-label" for="dokumen">dokumen</label>
-                <input type="file" name="dokumen" class="form-control" id="dokumen" placeholder="324..." value="{{ $user->dokumen }}">
+                <input type="file" name="dokumen" class="form-control" id="dokumen" value="{{ $user->dokumen }}">
             </div>
             <div class="col-12 pb-4">
                 <button type="submit" class="btn btn-primary">Update Data</button>

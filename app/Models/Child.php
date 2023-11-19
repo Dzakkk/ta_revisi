@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Keluarga extends Model
+class Child extends Model
 {
     use HasFactory;
 
     protected $dates = ['created_at'];
 
-    protected $table = 'keluarga';
+    protected $table = 'children';
 
     protected $primaryKey = 'id';
     protected $guarded = [];
@@ -20,6 +20,4 @@ class Keluarga extends Model
     {
         return $this->belongsTo(Biodata::class, 'nik', 'nik');
     }
-
-    
 }

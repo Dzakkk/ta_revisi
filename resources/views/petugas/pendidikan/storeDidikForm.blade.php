@@ -2,30 +2,37 @@
 
 @section('storePendidikanForm')
     <div class="container shadow pt-2 mt-2" style="width: 800px">
-        <form class="row g-3 d-flex" action="/petugas/storePendidikan" method="POST">
+        <form class="row g-3 d-flex" action="/petugas/storePendidikan" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="col-md-12">
                 <h5 for="nama_pendidikan" class="form-h5">Pendidikan Pegawai</h5>
             </div>
-            <div class="col-md-6">
-                <label for="inputPassword4" class="form-label">nik</label>
-                <input type="text" name="nik" class="form-control" id="inputnik4">
-            </div>
             <div class="col-md-12">
-                <label for="nama" class="form-label">Nama pendidikan</label>
-                <input type="text" name="nama_pendidikan" class="form-control" id="nama" placeholder="Univ.. A">
+                <label for="inpnip" class="form-label">NIP</label>
+                <input type="text" name="nip" class="form-control" id="inpnip">
             </div>
-            <div class="col-md-4">
-                <label for="inputgelar" class="form-label">gelar</label>
-                <input type="text" name="gelar" class="form-control" id="inputgelar">
+            <div class="col-md-6">
+                <label class="form-label" for="tahun_lulus">Tahun Lulus</label>
+                <input type="date" name="tahun_lulus" class="form-control" id="tahun_lulus" placeholder="324...">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
+                <label for="gelar" class="form-label">Gelar :</label>
+                <div class="input-group">
+                    <select class="form-select" id="gelar_select" name="gelar">
+                        <option value="">Pilih gelar</option>
+                        <option value="Sarjana">Sarjana</option>
+                        <option value="Magister">Magister</option>
+                        <option value="Dokter">Dokter</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <label class="form-label" for="program">program</label>
                 <input type="text" name="program" class="form-control" id="program" placeholder="324...">
             </div>
             <div class="col-md-6">
-                <label for="karpeg" class="form-label">tanggal lulus</label>
-                <input type="date" name="tahun_lulus" id="karpeg" class="form-control">
+                <label class="form-label" for="nama_pendidikan">nama_pendidikan</label>
+                <input type="text" name="nama_pendidikan" class="form-control" id="nama_pendidikan" placeholder="324...">
             </div>
             <div class="col-12 pb-4">
                 <button type="submit" class="btn btn-primary">Tambah Data</button>

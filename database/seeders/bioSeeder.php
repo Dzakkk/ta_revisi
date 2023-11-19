@@ -16,23 +16,23 @@ class bioSeeder extends Seeder
     {
         $data = [
             [
-                'nip' => '123',
+                'nip' => '1985072320005022001',
                 'nama' => 'John Doe',
-                'password' => Hash::make('123'),
+                'password' => Hash::make('22001'),
                 'role' => 'pegawai',
                
             ],
-            [
-                'nip' => '456',
+            [ 
+                'nip' => '199209262017051001',
                 'nama' => 'Syuaib',
-                'password' => Hash::make('456'),
+                'password' => Hash::make('51001'),
                 'role' => 'petugas',
              
             ],
             [
-                'nip' => '890',
+                'nip' => '199009282015051002',
                 'nama' => 'Kevin Muller',
-                'password' => Hash::make('890'),
+                'password' => Hash::make('51002'),
                 'role' => 'kepala_sekolah',
               
             ],

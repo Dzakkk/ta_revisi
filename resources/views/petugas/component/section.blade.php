@@ -10,7 +10,7 @@
                 <!-- Sales Card -->
                 <div class="col-xxl-4 col-md-4">
                     <div class="card info-card revenue-card">
-                        <a href="">
+                        <a href="/petugas/dashboard/biodata">
                             <div class="card-body">
                                 <h5 class="card-title">Pegawai <span>| this year</span></h5>
 
@@ -32,7 +32,7 @@
                 <!-- Revenue Card -->
                 <div class="col-xxl-4 col-md-4">
                     <div class="card info-card sales-card">
-                        <a href="">
+                        <a href="/petugas/dashboard/lakilaki">
                             <div class="card-body">
                                 <h5 class="card-title">Pegawai <span>| Laki Laki</span></h5>
 
@@ -53,7 +53,7 @@
                 <div class="col-xxl-4 col-xl-4">
 
                     <div class="card info-card customers-card">
-                        <a href="">
+                        <a href="/petugas/dashboard/perempuan">
                             <div class="card-body">
                                 <h5 class="card-title">Pegawai <span>| Perempuan</span></h5>
 
@@ -92,6 +92,118 @@
                         <div class="card-body">
                             <h5 class="card-title">Reports <span>/Today</span></h5>
 
+                            <div class="row">
+
+
+                                <!-- Diagram -->
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Jenis Kelamin Pegawai</h5>
+
+                                            <!-- Pie Chart -->
+                                            <div id="pieChart" style="min-height: 400px;" class="echart"></div>
+
+                                            <script>
+                                                document.addEventListener("DOMContentLoaded", () => {
+                                                    echarts.init(document.querySelector("#pieChart")).setOption({
+                                                        
+                                                        tooltip: {
+                                                            trigger: 'item'
+                                                        },
+                                                        legend: {
+                                                            orient: 'vertical',
+                                                            left: 'left'
+                                                        },
+                                                        series: [{
+                                                            name: 'Pengisian Biodata',
+                                                            type: 'pie',
+                                                            radius: '50%',
+                                                            data: [{
+                                                                    value: {{ $girl }},
+                                                                    name: 'Perempuan'
+                                                                },
+                                                                {
+                                                                    value: {{ $boy }},
+                                                                    name: 'Laki Laki'
+                                                                },
+                                                            ],
+                                                            emphasis: {
+                                                                itemStyle: {
+                                                                    shadowBlur: 10,
+                                                                    shadowOffsetX: 0,
+                                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                                }
+                                                            }
+                                                        }]
+                                                    });
+                                                });
+                                            </script>
+                                            <!-- End Pie Chart -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Pendidikan Pegawai</h5>
+
+                                            <!-- Donut Chart -->
+                                            <div id="donutChart" style="min-height: 400px;" class="echart"></div>
+
+                                            <script>
+                                                document.addEventListener("DOMContentLoaded", () => {
+                                                    echarts.init(document.querySelector("#donutChart")).setOption({
+                                                        tooltip: {
+                                                            trigger: 'item'
+                                                        },
+                                                        legend: {
+                                                            top: '5%',
+                                                            left: 'center'
+                                                        },
+                                                        series: [{
+                                                            name: 'Access From',
+                                                            type: 'pie',
+                                                            radius: ['40%', '70%'],
+                                                            avoidLabelOverlap: false,
+                                                            label: {
+                                                                show: false,
+                                                                position: 'center'
+                                                            },
+                                                            emphasis: {
+                                                                label: {
+                                                                    show: true,
+                                                                    fontSize: '18',
+                                                                    fontWeight: 'bold'
+                                                                }
+                                                            },
+                                                            labelLine: {
+                                                                show: false
+                                                            },
+                                                            data: [{
+                                                                    value: {{ $s1 }},
+                                                                    name: 'Sarjana'
+                                                                },
+                                                                {
+                                                                    value: {{ $s2 }},
+                                                                    name: 'Magister'
+                                                                },
+                                                                {
+                                                                    value: {{ $s3 }},
+                                                                    name: 'Dokter'
+                                                                },
+                                                            ]
+                                                        }]
+                                                    });
+                                                });
+                                            </script>
+                                            <!-- End Donut Chart -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -9,25 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('keluarga', function (Blueprint $table) {
-            $table->id();
-            $table->string('nip');
-            $table->foreign('nip')->references('nip')->on('pegawai')->onDelete('cascade');;
+            $table->id(); // Kolom id sebagai auto_increment primary key
+            $table->bigInteger('nik')->unsigned(); // Kolom nik sebagai foreign key
             $table->string('nama_pasangan');
-            $table->string('jumlah_anak');
+            $table->date('tanggal_lahir');
+            $table->string('tempat_lahir');
             $table->string('dokumen');
-            // Tambahkan kolom lainnya untuk informasi keluarga
             $table->timestamps();
-         });
-         
+
+            // Definisi foreign key untuk kolom nik
+            $table->foreign('nik')->references('nik')->on('biodata')->onDelete('cascade');
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('keluarga');
     }

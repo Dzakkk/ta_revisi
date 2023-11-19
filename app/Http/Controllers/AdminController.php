@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\NipEvent;
 use App\Models\Biodata;
+use App\Models\Child;
 use App\Models\Cuti;
 use App\Models\Histori;
 use App\Models\Keluarga;
@@ -11,8 +12,10 @@ use App\Models\Pangkat;
 use App\Models\Pegawai;
 use App\Models\Pelatihan;
 use App\Models\Pendidikan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class AdminController extends Controller
 {
@@ -21,26 +24,79 @@ class AdminController extends Controller
         $jumlah = Biodata::count();
         $boy = Biodata::where('jenis_kelamin', 'L')->count();
         $girl = Biodata::where('jenis_kelamin', 'P')->count();
-        return view('petugas.component.section', ['jumlah' => $jumlah, 'boy' => $boy, 'girl' => $girl]);
+
+        $s1 = Pendidikan::where('gelar', 'Sarjana')->count();
+        $s2 = Pendidikan::where('gelar', 'Magister')->count();
+        $s3 = Pendidikan::where('gelar', 'Dokter')->count();
+        return view('petugas.component.section', ['jumlah' => $jumlah, 'boy' => $boy, 'girl' => $girl, 's1' => $s1, 's2' => $s2, 's3' => $s3]);
+    }
+
+    public function lakilaki()
+    {
+        $user = Biodata::where('jenis_kelamin', 'L')->get();
+        return view('petugas.biodata.biodata', ['user' => $user]);
+    }
+
+    public function perempuan()
+    {
+        $user = Biodata::where('jenis_kelamin', 'P')->get();
+        return view('petugas.biodata.biodata', ['user' => $user]);
     }
 
     public function pegawai()
     {
-        $user = Pegawai::all();
-        return view('petugas.user.kepegawaian', ['user' => $user]);
+        $users = Pegawai::all();
+    
+        $usersWithBirthDate = $users->map(function ($user) {
+            // Assuming NIP format is YYYYMMDD
+            $year = substr($user->nip, 0, 4);
+            $month = substr($user->nip, 4, 2);
+            $day = substr($user->nip, 6, 2);
+    
+            // Create a Carbon instance for the birthdate
+            $birthDate = Carbon::createFromDate($year, $month, $day);
+    
+            // Calculate the date when the person turns 60
+            $turns60Date = $birthDate->addYears(60);
+    
+            // Add a new attribute to the user with the calculated date
+            $user->turns60Date = $turns60Date->toDateString();
+
+            // Add Tanggal Pengangkatan
+            $year1 = substr($user->nip, 8, 4);
+            $month1 = substr($user->nip, 12, 2);
+            $birthDate1 = Carbon::createFromDate($year1, $month1);
+            $user->birthDate1 = $birthDate1->format('Y-m');
+            return $user;
+        });
+    
+        return view('petugas.user.kepegawaian', ['user' => $usersWithBirthDate]);
     }
 
     public function pelatihan()
     {
         $user = Pelatihan::all();
-        return view('petugas.component.pelatihan', ['user' => $user]);
+        $pegawai = Pegawai::all();
+        return view('petugas.component.pelatihan', ['user' => $user, 'pegawai' => $pegawai]);
     }
+
+    // public function keluarga()
+    // {
+    //     $user = Keluarga::all();
+    //     return view('petugas.component.keluarga', ['user' => $user]);
+    // }
 
     public function keluarga()
     {
-        $user = Keluarga::all();
-        return view('petugas.component.keluarga', ['user' => $user]);
+
+        $families = Keluarga::with('biodata', 'biodata.child')->get();
+
+
+        return view('petugas.component.keluarga', ['user' => $families]);
     }
+
+
+
 
     public function histori()
     {
@@ -177,7 +233,7 @@ class AdminController extends Controller
             'telepon' => 'required',
             'karpeg' => 'required',
             'alamat' => 'required',
-            'photo_pas' => 'required|file|image|mimes:jpeg,png,jpg|max:2048', 
+            'photo_pas' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $data = [
@@ -192,7 +248,7 @@ class AdminController extends Controller
             'telepon' => $request->telepon,
             'karpeg' => $request->karpeg,
             'alamat' => $request->alamat,
-           
+
         ];
 
         if ($request->hasFile('photo_pas')) {
@@ -269,7 +325,7 @@ class AdminController extends Controller
     public function storePendidikan(Request $request)
     {
         $request->validate([
-            'nik' => 'required',
+            'nip' => 'required',
             'nama_pendidikan' => 'required',
             'gelar' => 'required',
             'program' => 'required',
@@ -277,7 +333,7 @@ class AdminController extends Controller
         ]);
 
         Pendidikan::create([
-            'nik' => $request->nik,
+            'nip' => $request->nip,
             'nama_pendidikan' => $request->nama_pendidikan,
             'gelar' => $request->gelar,
             'program' => $request->program,
@@ -304,6 +360,28 @@ class AdminController extends Controller
     {
         $user = Cuti::all(); // Mendapatkan data Cuti penggun
         return view('petugas.component.cuti', ['user' => $user]);
+    }
+
+    // public function setujuCuti()
+    // {
+    //     $user = Cuti::all(); // Mendapatkan data Cuti penggun
+    //     return view('petugas.component.cuti', ['user' => $user]);
+    // }
+
+    // public function tolakCuti()
+    // {
+    //     $user = Cuti::all(); // Mendapatkan data Cuti penggun
+    //     return view('petugas.component.cuti', ['user' => $user]);
+    // }
+
+    public function updateCuti(Request $request, $id)
+    {
+        $record=Cuti::findOrFail($id);
+        $record->status = $request->input('newStatus');
+        $record->save();
+
+        return redirect('/petugas/dashboard/cuti');
+
     }
 
     public function search(Request $request)

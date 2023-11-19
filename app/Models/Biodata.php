@@ -22,4 +22,14 @@ class Biodata extends Model
     {
         return $this->belongsTo(Pegawai::class, 'nip', 'nip');
     }
+
+    public function keluarga()
+    {
+        return $this->hasOne(Keluarga::class, 'nik', 'nik');
+    }
+
+    public function child()
+    {
+        return $this->hasMany(Child::class, 'nik', 'nik');
+    }
 }
